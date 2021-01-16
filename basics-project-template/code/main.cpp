@@ -1,11 +1,11 @@
 ﻿/*
  * MAIN
- * Copyright © 2018+ Ángel Rodríguez Ballesteros
+ * Copyright © 2020+ Alberto Estirado López
  *
  * Distributed under the Boost Software License, version  1.0
  * See documents/LICENSE.TXT or www.boost.org/LICENSE_1_0.txt
  *
- * angel.rodriguez@esne.edu
+ * estiradoalberto@gmail.com
  */
 
 #include <basics/Director>
@@ -18,10 +18,11 @@
 #include <basics/opengles/OpenGL_ES2>
 
 #include "Sample_Scene.hpp"
+#include "Intro_Scene.hpp"
 
 using namespace basics;
-using namespace example;
 using namespace std;
+
 
 int main ()
 {
@@ -31,7 +32,8 @@ int main ()
 
     // Se crea una escena y se inicia mediante el Director:
 
-    director.run_scene (shared_ptr< Scene >(new Sample_Scene));
+    director.run_scene (shared_ptr< Scene >(new helicopter::Intro_Scene));
 
     return 0;
 }
+

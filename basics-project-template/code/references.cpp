@@ -1,12 +1,13 @@
 ﻿/*
  * REFERENCES
- * Copyright © 2019+ Ángel Rodríguez Ballesteros
+ * Copyright © 2020+ Alberto Estirado López
  *
  * Distributed under the Boost Software License, version  1.0
  * See documents/LICENSE.TXT or www.boost.org/LICENSE_1_0.txt
  *
- * angel.rodriguez@esne.edu
+ * estiradoalberto@gmail.com
  */
+
 
 #include <basics/Director>
 #include <basics/enable>
