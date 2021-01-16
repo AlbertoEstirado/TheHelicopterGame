@@ -1,5 +1,5 @@
 /*
- * GAME SCENE
+ * SAMPLE SCENE
  * Copyright © 2020+ Alberto Estirado López
  *
  * Distributed under the Boost Software License, version  1.0

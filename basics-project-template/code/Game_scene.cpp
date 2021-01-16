@@ -1,5 +1,5 @@
 /*
- * GAME SCENE
+ * SAMPLE SCENE
  * Copyright © 2020+ Alberto Estirado López
  *
  * Distributed under the Boost Software License, version  1.0
@@ -9,7 +9,7 @@
  */
 
 
-#include "Sample_Scene.hpp"
+#include "Game_Scene.hpp"
 #include <basics/Canvas>
 #include <basics/Director>
 #include <basics/Log>

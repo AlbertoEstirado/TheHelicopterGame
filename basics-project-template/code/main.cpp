@@ -19,6 +19,7 @@
 
 #include "Sample_Scene.hpp"
 #include "Intro_Scene.hpp"
+#include "Game_Scene.hpp"
 
 using namespace basics;
 using namespace std;
