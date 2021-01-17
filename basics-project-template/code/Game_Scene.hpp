@@ -12,9 +12,11 @@
 #include <memory>
 #include <basics/Scene>
 #include <basics/Texture_2D>
+#include "Game.hpp"
 
 namespace helicopter
 {
+
     class Game_Scene : public basics::Scene
     {
 
@@ -33,6 +35,8 @@ namespace helicopter
 
         unsigned       canvas_width;
         unsigned       canvas_height;
+
+        Player player;
 
         Texture_Handle texture;
         float          x, y;

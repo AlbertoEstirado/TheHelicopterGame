@@ -9,6 +9,7 @@
  */
 
 #include "Intro_Scene.hpp"
+#include "Game_Scene.hpp"
 #include <basics/Canvas>
 #include <basics/Director>
 #include <basics/Log>
@@ -169,7 +170,7 @@ namespace helicopter
         {
             state = FINISHED;
 
-            director.run_scene (shared_ptr< Scene >(new helicopter::Intro_Scene));
+            director.run_scene (shared_ptr< Scene >(new helicopter::Game_Scene));
         }
     }
 
