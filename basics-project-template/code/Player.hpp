@@ -22,13 +22,16 @@ namespace helicopter
     {
         public:
 
+            static constexpr float GRAVITY = 100;
+
             Player(Texture_2D *texture);
 
             void render(Canvas & canvas);
 
             void start();
+            void update(float time);
 
-
+            void fly(float time);
     };
 
 

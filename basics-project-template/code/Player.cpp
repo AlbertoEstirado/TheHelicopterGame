@@ -47,6 +47,15 @@ namespace helicopter
         set_position({240,360});
     }
 
+    void Player::update(float time)
+    {
+        set_position({position[0], position[1] -= GRAVITY * time});
+    }
+
+    void Player::fly(float time)
+    {
+        set_position({position[0], position[1] += GRAVITY * time * 2});
+    }
 
 }
 

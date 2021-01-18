@@ -35,6 +35,8 @@ namespace helicopter
         State          state;
         bool           suspended;
 
+        bool touching;
+
         unsigned       canvas_width;
         unsigned       canvas_height;
 

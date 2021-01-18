@@ -25,6 +25,7 @@ namespace helicopter
     {
         canvas_width  = 1280;
         canvas_height =  720;
+        touching = false;
     }
 
     bool Game_Scene::initialize ()
@@ -54,9 +55,14 @@ namespace helicopter
             switch (event.id)
             {
                 case ID(touch-started):
+                {
+                    touching = true;
+                    break;
+                }
                 case ID(touch-moved):
                 case ID(touch-ended):
                 {
+                    touching = false;
                     x = *event[ID(x)].as< var::Float > ();
                     y = *event[ID(y)].as< var::Float > ();
                     break;
@@ -121,11 +127,7 @@ namespace helicopter
 
                 state = RUNNING;
             }
-
-
         }
-
-
     }
 
     void Game_Scene::start()
@@ -134,9 +136,10 @@ namespace helicopter
 
     }
 
-    void Game_Scene::run (float)
+    void Game_Scene::run (float time)
     {
-
+        player->update(time);
+        if(touching) { player->fly(time);}
     }
 
 }
