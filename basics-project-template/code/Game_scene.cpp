@@ -25,7 +25,6 @@ namespace helicopter
     {
         canvas_width  = 1280;
         canvas_height =  720;
-        player = Player(canvas_width, canvas_width) ;
     }
 
     bool Game_Scene::initialize ()
@@ -93,10 +92,10 @@ namespace helicopter
                 canvas->draw_point   ({ 360, 360 });
                 canvas->draw_segment ({   0,   0 }, { 1280, 720 });
                 canvas->draw_segment ({   0, 720 }, { 1280,   0 });
-                player.render(context);
-                if (texture)
+
+                if (player)
                 {
-                    canvas->fill_rectangle ({ x, y }, { 100, 100 }, texture.get ());
+                    player->render(*canvas);
                 }
             }
         }
@@ -110,14 +109,34 @@ namespace helicopter
 
             if (context)
             {
-                player.load();
+                texturePlayer = Texture_2D::create(ID(texturePlayer),context, "helicopterRocket.png");
+                player.reset(new Player(texturePlayer.get()));
 
+                if (texturePlayer)
+                {
+                    context->add(texturePlayer);
+                }
+
+                start();
+
+                state = RUNNING;
             }
+
+
         }
+
+
     }
 
-    void Game_Scene::run (float )
+    void Game_Scene::start()
     {
+        player->start();
+
+    }
+
+    void Game_Scene::run (float)
+    {
+
     }
 
 }

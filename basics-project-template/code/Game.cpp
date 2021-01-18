@@ -16,25 +16,21 @@
 #include <basics/Rotation>
 #include <basics/Translation>
 #include "Game.hpp"
+#include "Sprite.hpp"
 
 
 using namespace basics;
 using namespace std;
 
 namespace helicopter
-{
-    Player::Player()
+{/*
+    Player::Player(Texture_2D *texture)
     {
-        canvas_width  = 0;
-        canvas_height =  0;
+        x = sprite-> get_position_x();
+        y = sprite-> get_position_y();
     }
 
-    Player::Player(unsigned cw, unsigned ch)
-    {
-        canvas_width  = cw;
-        canvas_height =  ch;
-        Player::load();
-    }
+
 
 
     void Player::render(basics::Graphics_Context::Accessor &context)
@@ -75,7 +71,7 @@ namespace helicopter
 
             }
         }
-    }
+    }*/
 }
 
 

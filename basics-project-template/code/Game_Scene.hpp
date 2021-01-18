@@ -12,7 +12,9 @@
 #include <memory>
 #include <basics/Scene>
 #include <basics/Texture_2D>
-#include "Game.hpp"
+#include <vector>
+#include "Player.hpp"
+#include "Wall.hpp"
 
 namespace helicopter
 {
@@ -36,9 +38,11 @@ namespace helicopter
         unsigned       canvas_width;
         unsigned       canvas_height;
 
-        Player player;
+        std::unique_ptr<Player> player;
+        std::vector<Wall> walls;
 
-        Texture_Handle texture;
+        Texture_Handle texturePlayer;
+
         float          x, y;
 
     public:
@@ -61,6 +65,7 @@ namespace helicopter
     private:
 
         void load ();
+        void start();
         void run  (float time);
 
     };

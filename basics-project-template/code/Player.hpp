@@ -1,5 +1,5 @@
 /*
- * GAME SCENE
+ * PLAYER
  * Copyright © 2020+ Alberto Estirado López
  *
  * Distributed under the Boost Software License, version  1.0
@@ -22,28 +22,13 @@ namespace helicopter
     {
         public:
 
-            void render(Canvas & canvas);
-
-
-            Player(Texture_2D * texture);
-
-            void load();
-
-
-
-    };
-
-    class Walls
-    {
-        typedef std::shared_ptr< basics::Texture_2D > Texture_Handle;
-        Texture_Handle texture;
-
-        public:
-
+            Player(Texture_2D *texture);
 
             void render(Canvas & canvas);
 
-            Walls();
+            void start();
+
+
     };
 
 
