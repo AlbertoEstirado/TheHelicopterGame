@@ -26,6 +26,8 @@ namespace helicopter
         canvas_width  = 1280;
         canvas_height =  720;
         touching = false;
+        walls.resize(150);
+        srand (unsigned(time(nullptr)));
     }
 
     bool Game_Scene::initialize ()
@@ -55,11 +57,11 @@ namespace helicopter
             switch (event.id)
             {
                 case ID(touch-started):
+                case ID(touch-moved):
                 {
                     touching = true;
                     break;
                 }
-                case ID(touch-moved):
                 case ID(touch-ended):
                 {
                     touching = false;
@@ -95,13 +97,16 @@ namespace helicopter
             {
                 canvas->clear        ();
                 canvas->set_color    (1, 1, 1);
-                canvas->draw_point   ({ 360, 360 });
-                canvas->draw_segment ({   0,   0 }, { 1280, 720 });
-                canvas->draw_segment ({   0, 720 }, { 1280,   0 });
+
 
                 if (player)
                 {
                     player->render(*canvas);
+                }
+                //testWall.render(* canvas);
+
+                for (int i = 0; i < walls.size(); ++i) {
+                    walls[i].render(*canvas);
                 }
             }
         }
@@ -134,12 +139,78 @@ namespace helicopter
     {
         player->start();
 
+        for (int i = 0; i < walls.size(); ++i) {
+            walls[i].setUp();
+            walls[i].x = i*walls[i].botWall.width;
+
+            if(i > 0){
+             walls[i].moveWall(walls[i-1]);
+            }
+        }
+        //testWall.start();
+
     }
 
     void Game_Scene::run (float time)
     {
         player->update(time);
         if(touching) { player->fly(time);}
+
+        for (int i = 0; i < walls.size(); ++i) {
+            walls[i].update(time);
+        }
+
+        manageWalls();
+    }
+
+    void Game_Scene::manageWalls()
+    {
+        if(walls[firstWall].x < 0 - walls[firstWall].pathPart.width)
+        {
+            if(firstWall == 0)
+            {
+                walls[firstWall].x = walls[walls.size()-1].x + walls[firstWall].pathPart.width;
+                walls[firstWall].moveWall(walls[walls.size()-1]);
+            }
+            else
+            {
+                walls[firstWall].x = walls[firstWall-1].x + walls[firstWall].pathPart.width;
+                walls[firstWall].moveWall(walls[firstWall - 1]);
+            }
+
+            if(firstWall >= walls.size()-1)
+            {
+                firstWall = 0;
+            }
+            else
+            {
+                firstWall++;
+            }
+        }
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

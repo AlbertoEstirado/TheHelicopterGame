@@ -43,9 +43,13 @@ namespace helicopter
         std::unique_ptr<Player> player;
         std::vector<Wall> walls;
 
+        Wall testWall;
+
         Texture_Handle texturePlayer;
 
         float          x, y;
+
+        int firstWall = 0;
 
     public:
 
@@ -69,6 +73,8 @@ namespace helicopter
         void load ();
         void start();
         void run  (float time);
+
+        void manageWalls();
 
     };
 

@@ -22,10 +22,32 @@ namespace helicopter
     {
         public:
 
+            float speed = 200;
 
-            void render(Canvas & canvas);
+            float x = 0;
+
+            struct levelPart{
+                float y;
+                float width;
+                float height;
+            };
+
+            levelPart topWall;
+            levelPart botWall;
+
+            levelPart pathPart;
 
             Wall();
+
+            void render(Canvas & canvas);
+            void start();
+            void update(float time);
+            void setUp();
+            void calculatTopAndBot();
+            void moveWall(const Wall wallBehind);
+            int randomRange(int min, int max);
+
+
     };
 
 

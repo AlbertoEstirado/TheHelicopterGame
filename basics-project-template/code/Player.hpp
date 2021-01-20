@@ -22,7 +22,7 @@ namespace helicopter
     {
         public:
 
-            static constexpr float GRAVITY = 100;
+            static constexpr float GRAVITY = 150;
 
             Player(Texture_2D *texture);
 
