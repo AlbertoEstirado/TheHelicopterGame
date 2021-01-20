@@ -160,6 +160,10 @@ namespace helicopter
             walls[i].update(time);
         }
 
+        //if(player->get_position_y() < walls[firstWall].pathPart.y){
+        //    suspend();
+        //}
+
         manageWalls();
     }
 
