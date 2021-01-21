@@ -15,6 +15,7 @@
 #include <basics/Scaling>
 #include <basics/Rotation>
 #include <basics/Translation>
+#include <math.h>
 
 using namespace basics;
 using namespace std;
@@ -26,7 +27,8 @@ namespace helicopter
         canvas_width  = 1280;
         canvas_height =  720;
         touching = false;
-        walls.resize(150);
+        walls.resize(130);
+
         srand (unsigned(time(nullptr)));
     }
 
@@ -142,11 +144,16 @@ namespace helicopter
         for (int i = 0; i < walls.size(); ++i) {
             walls[i].setUp();
             walls[i].x = i*walls[i].botWall.width;
-
+//
             if(i > 0){
              walls[i].moveWall(walls[i-1]);
             }
         }
+
+        //paths[0].generateRandomPath();
+        //paths[1].generateRandomPath();
+        //generatePath(paths[0]);
+        //generatePath(paths[1]);
         //testWall.start();
 
     }
@@ -154,15 +161,15 @@ namespace helicopter
     void Game_Scene::run (float time)
     {
         player->update(time);
+
         if(touching) { player->fly(time);}
 
         for (int i = 0; i < walls.size(); ++i) {
             walls[i].update(time);
         }
 
-        //if(player->get_position_y() < walls[firstWall].pathPart.y){
-        //    suspend();
-        //}
+
+        //calculateWallsColision();
 
         manageWalls();
     }
@@ -192,6 +199,44 @@ namespace helicopter
             }
         }
     }
+
+    void Game_Scene::calculateWallsColision()
+    {
+        for (int i = 0; i < walls.size() - 1; ++i)
+        {
+            if(walls[i].x < player->get_position_x() &&
+            walls[i].x + walls[i].pathPart.width > player->get_position_x() )
+            {
+                if(player->get_position_y() < walls[i].pathPart.y ||
+                player->get_position_y() > walls[i].topWall.y)
+                {
+                    suspend();
+                }
+
+            }
+        }
+    }
+
+    void Game_Scene::generatePath(Path path)
+    {
+        for (int i = 1; i < path.size; ++i)
+        {
+            walls[i].setUp();
+
+
+           int a = (int)(path.size - walls[i].x);
+           int b = (int)(path.y2 - path.y);
+
+            walls[i].pathPart.y = (b*i/a) + path.y;
+
+            walls[i].x = i*walls[i].botWall.width;
+            walls[i].pathPart.height = 100;
+            walls[i].calculatTopAndBot();
+        }
+
+    }
+
+
 
 }
 

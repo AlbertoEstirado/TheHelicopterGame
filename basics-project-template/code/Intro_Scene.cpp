@@ -8,6 +8,7 @@
  * estiradoalberto@gmail.com
  */
 
+#include "Menu_Scene.hpp"
 #include "Intro_Scene.hpp"
 #include "Game_Scene.hpp"
 #include <basics/Canvas>
@@ -170,7 +171,7 @@ namespace helicopter
         {
             state = FINISHED;
 
-            director.run_scene (shared_ptr< Scene >(new helicopter::Game_Scene));
+            director.run_scene (shared_ptr< Scene >(new Menu_Scene));
         }
     }
 

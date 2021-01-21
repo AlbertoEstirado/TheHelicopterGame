@@ -50,6 +50,14 @@ namespace helicopter
         float          x, y;
 
         int firstWall = 0;
+        float playerXCoordenate = 0;
+        int currentWall = 0;
+        int lastPath = 0 ;
+        int pathCreated = 0;
+
+
+        std::vector<Path> paths;
+
 
     public:
 
@@ -75,6 +83,10 @@ namespace helicopter
         void run  (float time);
 
         void manageWalls();
+        void calculateWallsColision();
+        void generatePath(Path path);
+        void setUpPath();
+        //Path generateNextPath(int lasty);
 
     };
 

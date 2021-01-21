@@ -46,9 +46,9 @@ namespace helicopter
 
     void Wall::setUp()
     {
-        pathPart.y = 100;
+        pathPart.y = 150;
         pathPart.width = 10;
-        pathPart.height = 300;
+        pathPart.height = 400;
 
         calculatTopAndBot();
     }
@@ -67,25 +67,60 @@ namespace helicopter
 
     void Wall::moveWall(const Wall wallBehind)
     {
-        do
-        {
-            pathPart.y = (float)randomRange((int)wallBehind.pathPart.y -20,
-                                            (int)wallBehind.pathPart.y +20 );
-        }while (pathPart.y < 0 && pathPart.y > 420);
 
         do
         {
             pathPart.height = (float)randomRange((int)wallBehind.pathPart.height - 5 ,
                                                  (int)wallBehind.pathPart.height + 5);
-        }while (pathPart.height < 170 && pathPart.height > 350);
+        }while (pathPart.height < 270 && pathPart.height > 550);
 
+        if(wallBehind.pathPart.height > maxHeight)
+        {
+            pathPart.height = (float)randomRange((int)wallBehind.pathPart.height - 5 ,
+                                                 (int)wallBehind.pathPart.height);
+        }
+        else if(wallBehind.pathPart.height < minHeight)
+        {
+            pathPart.height = (float)randomRange((int)wallBehind.pathPart.height  ,
+                                                 (int)wallBehind.pathPart.height + 6);
+        }
+        else
+        {
+            pathPart.height = (float)randomRange((int)wallBehind.pathPart.height - 5 ,
+                                                 (int)wallBehind.pathPart.height + 6);
+        }
+
+
+
+        if(wallBehind.pathPart.y < 0)
+        {
+            pathPart.y = (float)randomRange((int)wallBehind.pathPart.y,
+                                            (int)wallBehind.pathPart.y +21 );
+        }
+        else if(wallBehind.pathPart.height + wallBehind.pathPart.y > 720)
+        {
+            pathPart.y = (float)randomRange((int)wallBehind.pathPart.y -20,
+                                            (int)wallBehind.pathPart.y);
+        }
+        else
+        {
+            pathPart.y = (float)randomRange((int)wallBehind.pathPart.y -20,
+                                            (int)wallBehind.pathPart.y +21 );
+        }
 
         calculatTopAndBot();
     }
 
+    void Wall::getHarder()
+    {
+        maxHeight -= 10;
+        minHeight -= 1;
+    }
+
+
      int Wall::randomRange(int min, int max) //range : [min, max]
     {
-        return min + rand() % (( max + 1 ) - min);
+        return min + rand() % (max - min);
     }
 
 }

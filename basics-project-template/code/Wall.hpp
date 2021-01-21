@@ -13,6 +13,7 @@
 #include <basics/Scene>
 #include <basics/Texture_2D>
 #include "Sprite.hpp"
+#include "Path.hpp"
 
 
 namespace helicopter
@@ -22,7 +23,7 @@ namespace helicopter
     {
         public:
 
-            float speed = 200;
+            float speed = 150;
 
             float x = 0;
 
@@ -31,6 +32,9 @@ namespace helicopter
                 float width;
                 float height;
             };
+
+            int maxHeight = 400;
+            int minHeight = 100;
 
             levelPart topWall;
             levelPart botWall;
@@ -45,6 +49,7 @@ namespace helicopter
             void setUp();
             void calculatTopAndBot();
             void moveWall(const Wall wallBehind);
+            void getHarder();
             int randomRange(int min, int max);
 
 
