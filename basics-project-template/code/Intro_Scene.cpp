@@ -82,7 +82,7 @@ namespace helicopter
                     canvas->fill_rectangle
                             (
                                     { canvas_width * .5f, canvas_height * .5f },
-                                    { intro_texture->get_width ()*6, intro_texture->get_height ()*6 },
+                                    { intro_texture->get_width (), intro_texture->get_height () },
                                     intro_texture. get ()
                             );
                 }

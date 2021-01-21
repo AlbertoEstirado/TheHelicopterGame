@@ -37,6 +37,8 @@ namespace helicopter
         {
             LOADING,
             RUNNING,
+            WAITTING,
+            GAMEOVER,
         };
 
         State          state;

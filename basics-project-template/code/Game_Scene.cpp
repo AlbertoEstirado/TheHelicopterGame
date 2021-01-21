@@ -55,6 +55,10 @@ namespace helicopter
 
     void Game_Scene::handle (Event & event)
     {
+        if(state == WAITTING)
+        {
+            state = RUNNING;
+        }
         if (state == RUNNING)
         {
             switch (event.id)
@@ -81,13 +85,14 @@ namespace helicopter
         switch (state)
         {
             case LOADING: load ();     break;
+            case WAITTING:   break;
             case RUNNING: run  (time); break;
         }
     }
 
     void Game_Scene::render (basics::Graphics_Context::Accessor & context)
     {
-        if (!suspended && state == RUNNING)
+        if (!suspended && (state == RUNNING || state == WAITTING))
         {
             Canvas * canvas = context->get_renderer< Canvas > (ID(canvas));
 
@@ -102,7 +107,7 @@ namespace helicopter
                 canvas->set_color    (1, 1, 1);
 
                 Text_Layout textLayout(*font, score_string);
-                canvas->draw_text({canvas_width/2, 150}, textLayout);
+
 
 
 
@@ -114,6 +119,8 @@ namespace helicopter
                 for (int i = 0; i < walls.size(); ++i) {
                     walls[i].render(*canvas);
                 }
+
+                canvas->draw_text({canvas_width/2, 150}, textLayout);
             }
         }
     }
@@ -126,7 +133,7 @@ namespace helicopter
 
             if (context)
             {
-                font.reset (new Raster_Font("fonts/impact.fnt", context));
+
 
                 texturePlayer = Texture_2D::create(ID(texturePlayer),context, "helicopterRocket.png");
                 player.reset(new Player(texturePlayer.get()));
@@ -138,7 +145,9 @@ namespace helicopter
 
                 start();
 
-                state = RUNNING;
+                font.reset (new Raster_Font("fonts/impact.fnt", context));
+
+                state = WAITTING;
             }
         }
     }
@@ -179,6 +188,7 @@ namespace helicopter
 
         manageWalls();
     }
+
 
     void Game_Scene::manageWalls()
     {

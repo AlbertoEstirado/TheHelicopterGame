@@ -13,6 +13,7 @@
 #include <basics/Scene>
 #include <basics/Texture_2D>
 #include "Sprite.hpp"
+#include "Smoke.hpp"
 
 
 namespace helicopter
@@ -23,6 +24,8 @@ namespace helicopter
         public:
 
             static constexpr float GRAVITY = 150;
+
+            std::vector<Smoke> smokes;
 
             Player(Texture_2D *texture);
 
