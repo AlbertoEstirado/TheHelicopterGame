@@ -17,6 +17,7 @@
 #include <basics/Translation>
 #include <math.h>
 
+
 using namespace basics;
 using namespace std;
 
@@ -100,12 +101,15 @@ namespace helicopter
                 canvas->clear        ();
                 canvas->set_color    (1, 1, 1);
 
+                Text_Layout textLayout(*font, score_string);
+                canvas->draw_text({canvas_width/2, 150}, textLayout);
+
+
 
                 if (player)
                 {
                     player->render(*canvas);
                 }
-                //testWall.render(* canvas);
 
                 for (int i = 0; i < walls.size(); ++i) {
                     walls[i].render(*canvas);
@@ -122,6 +126,8 @@ namespace helicopter
 
             if (context)
             {
+                font.reset (new Raster_Font("fonts/impact.fnt", context));
+
                 texturePlayer = Texture_2D::create(ID(texturePlayer),context, "helicopterRocket.png");
                 player.reset(new Player(texturePlayer.get()));
 
@@ -196,6 +202,16 @@ namespace helicopter
             else
             {
                 firstWall++;
+            }
+
+            score++;
+            score_string = to_wstring(score);
+            if(score % 50 == 0)
+            {
+                for (int i = 0; i < walls.size()-1; ++i)
+                {
+                    walls[i].getHarder();
+                }
             }
         }
     }

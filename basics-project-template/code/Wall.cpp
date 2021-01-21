@@ -113,8 +113,14 @@ namespace helicopter
 
     void Wall::getHarder()
     {
-        maxHeight -= 10;
-        minHeight -= 1;
+        if(minHeight > 50 )
+        {
+            minHeight -= 5;
+        }
+        if(maxHeight > 80)
+        {
+            maxHeight -= 10;
+        }
     }
 
 

@@ -13,8 +13,11 @@
 #include <basics/Scene>
 #include <basics/Texture_2D>
 #include <vector>
+#include <basics/Raster_Font>
 #include "Player.hpp"
 #include "Wall.hpp"
+
+
 
 namespace helicopter
 {
@@ -23,8 +26,12 @@ namespace helicopter
     {
 
         typedef std::shared_ptr< basics::Texture_2D > Texture_Handle;
+        typedef std::unique_ptr< basics::Raster_Font > Font_Handle;
 
     public:
+
+        Font_Handle font;
+        std::wstring score_string;
 
         enum State
         {
@@ -43,8 +50,6 @@ namespace helicopter
         std::unique_ptr<Player> player;
         std::vector<Wall> walls;
 
-        Wall testWall;
-
         Texture_Handle texturePlayer;
 
         float          x, y;
@@ -54,6 +59,7 @@ namespace helicopter
         int currentWall = 0;
         int lastPath = 0 ;
         int pathCreated = 0;
+        int score = 0;
 
 
         std::vector<Path> paths;
