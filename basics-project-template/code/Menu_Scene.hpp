@@ -32,6 +32,10 @@ namespace helicopter
 
     class Menu_Scene : public basics::Scene
     {
+        typedef std::unique_ptr< basics::Raster_Font > Font_Handle;
+
+        Font_Handle font;
+        std::wstring score_string;
 
         enum State
         {
@@ -43,10 +47,7 @@ namespace helicopter
 
         enum Option_Id
         {
-            PLAY,
-            SCORES,
-            HELP,
-            CREDITS
+            PLAY
         };
 
         struct Option
@@ -56,7 +57,7 @@ namespace helicopter
             float   is_pressed;
         };
 
-        static const unsigned number_of_options = 4;
+        static const unsigned number_of_options = 1;
 
     private:
 
@@ -71,6 +72,8 @@ namespace helicopter
         Option   options[number_of_options];                ///< Datos de las opciones del menÃº
 
         std::unique_ptr< Atlas > atlas;                     ///< Atlas que contiene las imÃ¡genes de las opciones del menÃº
+
+        int loadedscore;
 
     public:
 
@@ -99,6 +102,8 @@ namespace helicopter
 
         void update (float time) override;
 
+        void load();
+
         void render (Graphics_Context::Accessor & context) override;
 
     private:
@@ -107,6 +112,8 @@ namespace helicopter
         void configure_options ();
 
         int option_at (const Point2f & point);
+
+        void loadScore();
 
     };
 

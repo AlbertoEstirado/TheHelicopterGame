@@ -13,6 +13,8 @@
 #include <basics/Canvas>
 #include <basics/Director>
 #include <basics/Transformation>
+#include <basics/Application>
+#include <basics/Log>
 
 using namespace basics;
 using namespace std;
@@ -36,6 +38,9 @@ namespace helicopter
         {
             option.is_pressed = false;
         }
+
+        load();
+
 
         return true;
     }
@@ -100,7 +105,7 @@ namespace helicopter
                 {
                     // Se carga el atlas:
 
-                    atlas.reset (new Atlas("menu-scene/main-menu.sprites", context));
+                    atlas.reset (new Atlas("hud-atlas/helicopterSpriteSheet.sprites", context));
 
                     // Si el atlas se ha podido cargar el estado es READY y, en otro caso, es ERROR:
 
@@ -117,6 +122,24 @@ namespace helicopter
     }
 
     // ---------------------------------------------------------------------------------------------
+
+   void Menu_Scene::load()
+   {
+       if (!suspended)
+       {
+           //Graphics_Context::Accessor context = director.lock_graphics_context ();
+//
+           //if (context)
+           //{
+           //    font.reset (new Raster_Font("fonts/impact.fnt", context));
+//
+           //}
+
+           loadScore();
+           score_string = to_wstring(loadedscore);
+
+       }
+   }
 
     void Menu_Scene::render (Graphics_Context::Accessor & context)
     {
@@ -161,6 +184,13 @@ namespace helicopter
                     // dibujos posteriores realizados con el mismo canvas:
 
                     canvas->set_transform (Transformation2f());
+
+
+
+
+                    font.reset (new Raster_Font("fonts/impact.fnt", context));
+                    Text_Layout textLayout(*font, score_string);
+                    canvas->draw_text({canvas_width/6, 100}, textLayout);
                 }
             }
         }
@@ -173,15 +203,12 @@ namespace helicopter
         // Se asigna un slice del atlas a cada opciÃ³n del menÃº segÃºn su ID:
 
         options[PLAY   ].slice = atlas->get_slice (ID(play)   );
-        options[SCORES ].slice = atlas->get_slice (ID(scores) );
-        options[HELP   ].slice = atlas->get_slice (ID(help)   );
-        options[CREDITS].slice = atlas->get_slice (ID(credits));
 
         // Se calcula la altura total del menÃº:
 
         float menu_height = 0;
 
-        for (auto & option : options) menu_height += option.slice->height;
+        for (auto & option : options) menu_height += option.slice->height + 20;
 
         // Se calcula la posiciÃ³n del borde superior del menÃº en su conjunto de modo que
         // quede centrado verticalmente:
@@ -224,5 +251,31 @@ namespace helicopter
 
         return -1;
     }
+
+   void Menu_Scene::loadScore()
+   {
+      string path = application.get_internal_data_path() + "/save.data";
+      basics::log.d (string("loading score from:  ") + path);
+
+      ifstream reader(path, ofstream::binary);
+
+      if(reader)
+      {
+          int auxscoreloaed;
+
+          reader.read((char *)&auxscoreloaed, sizeof(auxscoreloaed));
+
+          if (!reader.fail () && !reader.bad ())
+          {
+              loadedscore = auxscoreloaed;
+          }
+          else
+          {
+              basics::log.e ("ERROR at loading score in game_scene failed reading save.data.");
+          }
+
+      }
+
+   }
 
 }

@@ -16,6 +16,7 @@
 #include <basics/Raster_Font>
 #include "Player.hpp"
 #include "Wall.hpp"
+#include "Menu_Scene.hpp"
 #include <basics/Atlas>
 #include <fstream>
 
@@ -69,7 +70,7 @@ namespace helicopter
         int lastPath = 0 ;
         int pathCreated = 0;
         int score = 0;
-
+        int scoreloaded;
 
         std::vector<Path> paths;
 
@@ -99,6 +100,7 @@ namespace helicopter
         void gameover();
         void gameoverScreen();
 
+        void loadScore();
         void saveScore();
 
         void draw_slice (basics::Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id);

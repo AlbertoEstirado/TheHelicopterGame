@@ -31,7 +31,7 @@ namespace helicopter
         touching = false;
         walls.resize(130);
 
-
+        loadScore();
     }
 
     bool Game_Scene::initialize ()
@@ -40,6 +40,7 @@ namespace helicopter
         suspended = false;
         x         = 640;
         y         = 360;
+
 
         srand (unsigned(time(nullptr)));
 
@@ -81,6 +82,18 @@ namespace helicopter
                 }
             }
         }
+        if(state == GAMEOVER)
+        {
+            switch (event.id) {
+                case ID(touch - started):
+                case ID(touch-moved):
+                    {
+                    initialize();
+                    //director.run_scene (shared_ptr< Scene >(new Menu_Scene));
+                    break;
+                }
+            }
+        }
     }
 
     void Game_Scene::update (float time)
@@ -110,8 +123,6 @@ namespace helicopter
                 canvas->clear        ();
                 canvas->set_color    (1, 1, 1);
 
-                Text_Layout textLayout(*font, score_string);
-
 
                 if (player)
                 {
@@ -131,10 +142,13 @@ namespace helicopter
                                            gameover_texture. get ());
                 }
 
+                Text_Layout textLayout(*font, score_string);
                 canvas->draw_text({canvas_width/2, 150}, textLayout);
             }
         }
     }
+
+
 
     void Game_Scene::load ()
     {
@@ -211,6 +225,11 @@ namespace helicopter
 
     void Game_Scene::gameover()
     {
+        if(score > scoreloaded)
+        {
+            saveScore();
+        }
+
         state = GAMEOVER;
     }
 
@@ -228,16 +247,48 @@ namespace helicopter
         }
     }
 
+    void Game_Scene::loadScore()
+    {
+        string path = application.get_internal_data_path() + "/save.data";
+        basics::log.d (string("loading score from:  ") + path);
+
+        ifstream reader(path, ofstream::binary);
+
+        if(reader)
+        {
+            int auxscoreloaed;
+
+            reader.read((char *)&auxscoreloaed, sizeof(auxscoreloaed));
+
+            if (!reader.fail () && !reader.bad ())
+            {
+                scoreloaded = auxscoreloaed;
+            }
+            else
+            {
+                basics::log.e ("ERROR at loading score in game_scene failed reading save.data.");
+            }
+
+        }
+
+    }
+
     void Game_Scene::saveScore()
     {
-        //string path = application.get_internal_data_path() + "/save.data";
-//
-        //ofstream writer(path, ofstream::binary | ofstream::trunc);
-//
-        //if(writer)
-        //{
-        //    writer.write();
-        //}
+        string path = application.get_internal_data_path () + "/save.data";
+
+        basics::log.d (string("saving score and creating file at ") + path);
+
+        ofstream writer(path, ofstream::binary | ofstream::trunc);
+        score = 7;
+        if(writer)
+        {
+            writer.write ((char *)&score, sizeof(score));
+        }
+        if (writer.good ())
+        {
+            basics::log.d ("Score saved succesfully...");
+        }
     }
 
     void Game_Scene::draw_slice (Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id)
