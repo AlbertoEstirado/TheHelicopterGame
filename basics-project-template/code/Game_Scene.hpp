@@ -17,6 +17,7 @@
 #include "Player.hpp"
 #include "Wall.hpp"
 #include <basics/Atlas>
+#include <fstream>
 
 
 
@@ -97,6 +98,8 @@ namespace helicopter
         void run  (float time);
         void gameover();
         void gameoverScreen();
+
+        void saveScore();
 
         void draw_slice (basics::Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id);
 

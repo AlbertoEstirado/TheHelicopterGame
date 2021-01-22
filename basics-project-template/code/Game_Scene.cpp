@@ -16,6 +16,7 @@
 #include <basics/Rotation>
 #include <basics/Translation>
 #include <math.h>
+#include <basics/Application>
 
 
 using namespace basics;
@@ -30,7 +31,7 @@ namespace helicopter
         touching = false;
         walls.resize(130);
 
-        srand (unsigned(time(nullptr)));
+
     }
 
     bool Game_Scene::initialize ()
@@ -39,6 +40,8 @@ namespace helicopter
         suspended = false;
         x         = 640;
         y         = 360;
+
+        srand (unsigned(time(nullptr)));
 
         return true;
     }
@@ -223,6 +226,18 @@ namespace helicopter
                 contex->add(gameover_texture);
             }
         }
+    }
+
+    void Game_Scene::saveScore()
+    {
+        //string path = application.get_internal_data_path() + "/save.data";
+//
+        //ofstream writer(path, ofstream::binary | ofstream::trunc);
+//
+        //if(writer)
+        //{
+        //    writer.write();
+        //}
     }
 
     void Game_Scene::draw_slice (Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id)
