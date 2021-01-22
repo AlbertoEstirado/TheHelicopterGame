@@ -16,11 +16,13 @@
 #include <basics/Raster_Font>
 #include "Player.hpp"
 #include "Wall.hpp"
+#include <basics/Atlas>
 
 
 
 namespace helicopter
 {
+    typedef std::unique_ptr< basics::Atlas > Atlas_Handle;
 
     class Game_Scene : public basics::Scene
     {
@@ -53,6 +55,10 @@ namespace helicopter
         std::vector<Wall> walls;
 
         Texture_Handle texturePlayer;
+        std::shared_ptr<Texture_2D> gameover_texture;
+
+        Atlas_Handle atlas;
+
 
         float          x, y;
 
@@ -89,8 +95,13 @@ namespace helicopter
         void load ();
         void start();
         void run  (float time);
+        void gameover();
+        void gameoverScreen();
+
+        void draw_slice (basics::Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id);
 
         void manageWalls();
+        void manageSmokes();
         void calculateWallsColision();
         void generatePath(Path path);
         void setUpPath();

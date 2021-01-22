@@ -14,10 +14,12 @@
 #include <basics/Texture_2D>
 #include "Sprite.hpp"
 #include "Smoke.hpp"
+#include <basics/Timer>
 
 
 namespace helicopter
 {
+    using basics::Timer;
 
     class Player : public Sprite
     {
@@ -26,6 +28,8 @@ namespace helicopter
             static constexpr float GRAVITY = 150;
 
             std::vector<Smoke> smokes;
+
+            Timer timer;
 
             Player(Texture_2D *texture);
 

@@ -87,12 +87,13 @@ namespace helicopter
             case LOADING: load ();     break;
             case WAITTING:   break;
             case RUNNING: run  (time); break;
+            case GAMEOVER: gameoverScreen(); break;
         }
     }
 
     void Game_Scene::render (basics::Graphics_Context::Accessor & context)
     {
-        if (!suspended && (state == RUNNING || state == WAITTING))
+        if (!suspended && (state == RUNNING || state == WAITTING || state == GAMEOVER))
         {
             Canvas * canvas = context->get_renderer< Canvas > (ID(canvas));
 
@@ -109,8 +110,6 @@ namespace helicopter
                 Text_Layout textLayout(*font, score_string);
 
 
-
-
                 if (player)
                 {
                     player->render(*canvas);
@@ -118,6 +117,15 @@ namespace helicopter
 
                 for (int i = 0; i < walls.size(); ++i) {
                     walls[i].render(*canvas);
+                }
+
+                if(gameover_texture)
+                {
+                    //draw_slice (canvas, { canvas_width * 0.5f, canvas_height * 0.7f }, *atlas, ID(gameover));
+
+                    canvas->fill_rectangle({ canvas_width * .5f, canvas_height * .7f },
+                                           { gameover_texture->get_width (), gameover_texture->get_height () },
+                                           gameover_texture. get ());
                 }
 
                 canvas->draw_text({canvas_width/2, 150}, textLayout);
@@ -135,7 +143,11 @@ namespace helicopter
             {
 
 
-                texturePlayer = Texture_2D::create(ID(texturePlayer),context, "helicopterRocket.png");
+                //atlas.reset (new Atlas("hud-atlas/helicopterSpriteSheet.sprites", context));
+
+
+
+                texturePlayer = Texture_2D::create(ID(texturePlayer),context, "helicopter_sprite.png");
                 player.reset(new Player(texturePlayer.get()));
 
                 if (texturePlayer)
@@ -147,6 +159,7 @@ namespace helicopter
 
                 font.reset (new Raster_Font("fonts/impact.fnt", context));
 
+                //state = atlas->good () ? WAITTING : LOADING;
                 state = WAITTING;
             }
         }
@@ -183,12 +196,44 @@ namespace helicopter
             walls[i].update(time);
         }
 
+        for (int i = 0; i < player->smokes.size(); ++i) {
+            player->smokes[i].update(time);
+        }
 
-        //calculateWallsColision();
+        calculateWallsColision();
 
         manageWalls();
+        manageSmokes();
     }
 
+    void Game_Scene::gameover()
+    {
+        state = GAMEOVER;
+    }
+
+    void Game_Scene::gameoverScreen()
+    {
+        Graphics_Context::Accessor contex = director.lock_graphics_context();
+
+        if(contex)
+        {
+            gameover_texture = Texture_2D::create(1,contex, "gameover.png");
+            if(gameover_texture)
+            {
+                contex->add(gameover_texture);
+            }
+        }
+    }
+
+    void Game_Scene::draw_slice (Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id)
+    {
+        const Atlas::Slice * slice = atlas.get_slice (slice_id);
+
+        if (slice)
+        {
+            canvas->fill_rectangle (where, { slice->width, slice->height }, slice);
+        }
+    }
 
     void Game_Scene::manageWalls()
     {
@@ -226,6 +271,17 @@ namespace helicopter
         }
     }
 
+    void Game_Scene::manageSmokes()
+    {
+        for (int i = 0; i < player->smokes.size(); ++i) {
+            if(player->smokes[i].x < 0)
+            {
+                player->smokes[i].x = player->get_position_x();
+                player->smokes[i].y = player->get_position_y();
+            }
+        }
+    }
+
     void Game_Scene::calculateWallsColision()
     {
         for (int i = 0; i < walls.size() - 1; ++i)
@@ -236,9 +292,8 @@ namespace helicopter
                 if(player->get_position_y() < walls[i].pathPart.y ||
                 player->get_position_y() > walls[i].topWall.y)
                 {
-                    suspend();
+                    gameover();
                 }
-
             }
         }
     }

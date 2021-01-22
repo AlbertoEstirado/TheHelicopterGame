@@ -120,7 +120,7 @@ namespace helicopter
 
         if(context)
         {
-            intro_texture = Texture_2D::create(0, context, "helicopterLogo.png");
+            intro_texture = Texture_2D::create(0, context, "helicopter_logo.png");
 
             if(intro_texture)
             {

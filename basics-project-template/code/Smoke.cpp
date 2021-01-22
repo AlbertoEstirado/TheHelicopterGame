@@ -31,9 +31,12 @@ namespace helicopter
 
     void Smoke::render(Canvas &canvas)
     {
-
         canvas.fill_rectangle ({x,y}, {3,3});
+    }
 
+    void Smoke::update(float time)
+    {
+        x -= speed * time;
     }
 
 }

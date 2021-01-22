@@ -15,6 +15,7 @@
 #include "Sprite.hpp"
 
 
+
 namespace helicopter
 {
     class Smoke
@@ -22,10 +23,12 @@ namespace helicopter
     public:
         int x;
         int y;
+        float speed = 150;
 
 
         Smoke();
         void render(Canvas & canvas);
+        void update(float time);
     };
 
 

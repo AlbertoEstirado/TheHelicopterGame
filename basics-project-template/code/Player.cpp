@@ -32,7 +32,7 @@ namespace helicopter
         scale    = 1.f;
         speed    = { 0.f, 0.f };
         visible  = true;
-        smokes.resize(5);
+        smokes.resize(25);
     }
 
     void Player::render(Canvas &canvas)
@@ -51,14 +51,17 @@ namespace helicopter
     {
         set_position({240,360});
         for (int i = 0; i < smokes.size(); ++i) {
+
             smokes[i].y = get_position_y();
-            smokes[i].x = get_position_x() - 8*(i+1);
+            smokes[i].x = get_position_x() - 10*(i+1);
         }
+
     }
 
     void Player::update(float time)
     {
         set_position({position[0], position[1] -= GRAVITY * time});
+
     }
 
     void Player::fly(float time)
