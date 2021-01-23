@@ -20,11 +20,9 @@
 #include <basics/Atlas>
 #include <fstream>
 
-
-
 namespace helicopter
 {
-    typedef std::unique_ptr< basics::Atlas > Atlas_Handle;
+    using basics::Atlas;
 
     class Game_Scene : public basics::Scene
     {
@@ -59,7 +57,29 @@ namespace helicopter
         Texture_Handle texturePlayer;
         std::shared_ptr<Texture_2D> gameover_texture;
 
-        Atlas_Handle atlas;
+        enum Option_Id
+        {
+            TRY_AGAIN,
+            MENU,
+            PAUSE,
+            PAUSEICON,
+            RESUME,
+            GAMEOVERHUD,
+        };
+
+        struct Option
+        {
+            const Atlas::Slice * slice;
+            int x;
+            int y;
+            float is_pressed;
+        };
+
+        static const unsigned number_of_options = 2;
+
+        Option options[number_of_options];
+
+        std::unique_ptr<Atlas> atlas;
 
 
         float          x, y;
@@ -99,6 +119,8 @@ namespace helicopter
         void run  (float time);
         void gameover();
         void gameoverScreen();
+
+        void configureUI();
 
         void loadScore();
         void saveScore();

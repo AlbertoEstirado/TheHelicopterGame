@@ -202,13 +202,15 @@ namespace helicopter
     {
         // Se asigna un slice del atlas a cada opciÃ³n del menÃº segÃºn su ID:
 
-        options[PLAY   ].slice = atlas->get_slice (ID(play)   );
+        options[PLAY].slice = atlas->get_slice (ID(play)   );
+        options[TITLE].slice = atlas->get_slice(ID(helicoptertitle));
+
 
         // Se calcula la altura total del menÃº:
 
         float menu_height = 0;
 
-        for (auto & option : options) menu_height += option.slice->height + 20;
+        for (auto & option : options) menu_height += option.slice->height ;
 
         // Se calcula la posiciÃ³n del borde superior del menÃº en su conjunto de modo que
         // quede centrado verticalmente:

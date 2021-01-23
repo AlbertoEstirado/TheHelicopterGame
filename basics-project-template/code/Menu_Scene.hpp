@@ -18,6 +18,7 @@
 #include <basics/Scene>
 #include <basics/Size>
 #include <basics/Timer>
+#include "istream"
 
 namespace helicopter
 {
@@ -47,7 +48,9 @@ namespace helicopter
 
         enum Option_Id
         {
-            PLAY
+            TITLE,
+            PLAY,
+
         };
 
         struct Option
@@ -57,7 +60,7 @@ namespace helicopter
             float   is_pressed;
         };
 
-        static const unsigned number_of_options = 1;
+        static const unsigned number_of_options = 2;
 
     private:
 

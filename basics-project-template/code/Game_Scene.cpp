@@ -40,7 +40,7 @@ namespace helicopter
         suspended = false;
         x         = 640;
         y         = 360;
-
+        firstWall = 0;
 
         srand (unsigned(time(nullptr)));
 
@@ -133,7 +133,13 @@ namespace helicopter
                     walls[i].render(*canvas);
                 }
 
-                if(gameover_texture)
+
+                canvas->fill_rectangle({options[GAMEOVERHUD].x,options[GAMEOVERHUD].y},
+                        {options[GAMEOVERHUD].slice->width, options[GAMEOVERHUD].slice->height}
+                        ,options[GAMEOVERHUD].slice);
+
+
+                if(gameover_texture && state == GAMEOVER)
                 {
                     //draw_slice (canvas, { canvas_width * 0.5f, canvas_height * 0.7f }, *atlas, ID(gameover));
 
@@ -159,10 +165,12 @@ namespace helicopter
             if (context)
             {
 
+                atlas.reset (new Atlas("hud-atlas/helicopterSpriteSheet.sprites", context));
 
-                //atlas.reset (new Atlas("hud-atlas/helicopterSpriteSheet.sprites", context));
-
-
+                if(atlas->good())
+                {
+                    configureUI();
+                }
 
                 texturePlayer = Texture_2D::create(ID(texturePlayer),context, "helicopter_sprite.png");
                 player.reset(new Player(texturePlayer.get()));
@@ -245,6 +253,20 @@ namespace helicopter
                 contex->add(gameover_texture);
             }
         }
+    }
+
+    void Game_Scene::configureUI()
+    {
+        //options[TRY_AGAIN].slice = atlas->get_slice(ID(tryagain));
+        //options[MENU].slice = atlas->get_slice(ID(menu));
+        //options[PAUSEICON].slice = atlas->get_slice(ID(pauseicon));
+        //options[PAUSE].slice = atlas->get_slice(ID(pause));
+        //options[RESUME].slice = atlas->get_slice(ID(resumeincon));
+        options[GAMEOVERHUD].slice = atlas->get_slice(ID(gameover));
+
+        options[GAMEOVERHUD].x = canvas_width/2 ;//- options[GAMEOVERHUD].slice->width/2;
+        options[GAMEOVERHUD].y = canvas_height/2;
+
     }
 
     void Game_Scene::loadScore()
