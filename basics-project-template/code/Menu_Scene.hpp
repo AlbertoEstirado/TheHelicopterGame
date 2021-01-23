@@ -50,6 +50,7 @@ namespace helicopter
         {
             TITLE,
             PLAY,
+            TOPSCORE,
 
         };
 
@@ -60,7 +61,7 @@ namespace helicopter
             float   is_pressed;
         };
 
-        static const unsigned number_of_options = 2;
+        static const unsigned number_of_options = 3;
 
     private:
 

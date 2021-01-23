@@ -105,7 +105,7 @@ namespace helicopter
                 {
                     // Se carga el atlas:
 
-                    atlas.reset (new Atlas("hud-atlas/helicopterSpriteSheet.sprites", context));
+                    atlas.reset (new Atlas("atlas/helicopter_atlas.sprites", context));
 
                     // Si el atlas se ha podido cargar el estado es READY y, en otro caso, es ERROR:
 
@@ -190,7 +190,7 @@ namespace helicopter
 
                     font.reset (new Raster_Font("fonts/impact.fnt", context));
                     Text_Layout textLayout(*font, score_string);
-                    canvas->draw_text({canvas_width/6, 100}, textLayout);
+                    canvas->draw_text({canvas_width/2.2, canvas_height/3.4f}, textLayout);
                 }
             }
         }
@@ -202,31 +202,20 @@ namespace helicopter
     {
         // Se asigna un slice del atlas a cada opciÃ³n del menÃº segÃºn su ID:
 
-        options[PLAY].slice = atlas->get_slice (ID(play)   );
+        options[PLAY].slice = atlas->get_slice (ID(play));
         options[TITLE].slice = atlas->get_slice(ID(helicoptertitle));
+        options[TOPSCORE].slice = atlas->get_slice(ID(topscore));
 
 
-        // Se calcula la altura total del menÃº:
+        options[TITLE].position[0] = canvas_width/2;
+        options[TITLE].position[1] = canvas_height/1.2f;
 
-        float menu_height = 0;
+        options[PLAY].position[0] = canvas_width/2;
+        options[PLAY].position[1] = canvas_height/2;
 
-        for (auto & option : options) menu_height += option.slice->height ;
+        options[TOPSCORE].position[0] = canvas_width/2;
+        options[TOPSCORE].position[1] = canvas_height/2.6f;
 
-        // Se calcula la posiciÃ³n del borde superior del menÃº en su conjunto de modo que
-        // quede centrado verticalmente:
-
-        float option_top = canvas_height / 2.f + menu_height / 2.f;
-
-        // Se establece la posiciÃ³n del borde superior de cada opciÃ³n:
-
-        for (unsigned index = 0; index < number_of_options; ++index)
-        {
-            options[index].position = Point2f{ canvas_width / 2.f, option_top };
-
-            option_top -= options[index].slice->height;
-        }
-
-        // Se restablece la presiÃ³n de cada opciÃ³n:
 
         initialize ();
     }

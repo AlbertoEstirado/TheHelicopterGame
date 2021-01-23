@@ -41,6 +41,7 @@ namespace helicopter
             RUNNING,
             WAITTING,
             GAMEOVER,
+            PAUSE
         };
 
         State          state;
@@ -59,11 +60,11 @@ namespace helicopter
 
         enum Option_Id
         {
-            TRY_AGAIN,
+            //TRY_AGAIN,
             MENU,
-            PAUSE,
+            //PAUSETEXT,
             PAUSEICON,
-            RESUME,
+            RESUMEICON,
             GAMEOVERHUD,
         };
 
@@ -75,7 +76,7 @@ namespace helicopter
             float is_pressed;
         };
 
-        static const unsigned number_of_options = 2;
+        static const unsigned number_of_options = 3;
 
         Option options[number_of_options];
 
@@ -120,6 +121,8 @@ namespace helicopter
         void gameover();
         void gameoverScreen();
 
+        void pause(bool b);
+
         void configureUI();
 
         void loadScore();
@@ -133,6 +136,8 @@ namespace helicopter
         void generatePath(Path path);
         void setUpPath();
         //Path generateNextPath(int lasty);
+
+        int option_at (const Point2f & point);
 
     };
 
