@@ -93,7 +93,6 @@ namespace helicopter
         int score = 0;
         int scoreloaded;
 
-        std::vector<Path> paths;
 
 
     public:
@@ -119,7 +118,6 @@ namespace helicopter
         void start();
         void run  (float time);
         void gameover();
-        void gameoverScreen();
 
         void pause(bool b);
 
@@ -133,9 +131,7 @@ namespace helicopter
         void manageWalls();
         void manageSmokes();
         void calculateWallsColision();
-        void generatePath(Path path);
-        void setUpPath();
-        //Path generateNextPath(int lasty);
+
 
         void printOption(Option_Id option, basics::Canvas & canvas);
         int option_at (const Point2f & point);

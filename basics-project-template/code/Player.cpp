@@ -39,6 +39,7 @@ namespace helicopter
     {
         if (visible)
         {
+            //renderizamos los smokes
             for (int i = 0; i < smokes.size(); ++i) {
                 smokes[i].render(canvas);
             }

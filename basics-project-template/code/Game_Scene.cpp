@@ -42,8 +42,6 @@ namespace helicopter
         y         = 360;
         firstWall = 0;
 
-        //player->start();
-
         srand (unsigned(time(nullptr)));
 
         return true;
@@ -209,17 +207,12 @@ namespace helicopter
         for (int i = 0; i < walls.size(); ++i) {
             walls[i].setUp();
             walls[i].x = i*walls[i].botWall.width;
-//
+
             if(i > 0){
              walls[i].moveWall(walls[i-1]);
             }
         }
 
-        //paths[0].generateRandomPath();
-        //paths[1].generateRandomPath();
-        //generatePath(paths[0]);
-        //generatePath(paths[1]);
-        //testWall.start();
 
     }
 
@@ -251,10 +244,6 @@ namespace helicopter
         state = GAMEOVER;
     }
 
-    void Game_Scene::gameoverScreen()
-    {
-
-    }
 
     void Game_Scene::pause(bool b)
     {
@@ -416,24 +405,7 @@ namespace helicopter
         }
     }
 
-    void Game_Scene::generatePath(Path path)
-    {
-        for (int i = 1; i < path.size; ++i)
-        {
-            walls[i].setUp();
 
-
-           int a = (int)(path.size - walls[i].x);
-           int b = (int)(path.y2 - path.y);
-
-            walls[i].pathPart.y = (b*i/a) + path.y;
-
-            walls[i].x = i*walls[i].botWall.width;
-            walls[i].pathPart.height = 100;
-            walls[i].calculatTopAndBot();
-        }
-
-    }
 
     void Game_Scene::printOption(Option_Id option, Canvas & canvas)
     {
