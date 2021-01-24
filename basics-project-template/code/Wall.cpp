@@ -22,10 +22,7 @@ using namespace std;
 
 namespace helicopter
 {
-    Wall::Wall()
-    {
-
-    }
+    Wall::Wall(){}
 
     void Wall::render(Canvas &canvas)
     {
@@ -34,16 +31,19 @@ namespace helicopter
         canvas.fill_rectangle({x,botWall.y}, {botWall.width, botWall.height});
     }
 
-    void Wall::start()
-    {
-        setUp();
-    }
 
+    /*
+     * Funcion que se ejecuta cada frame
+     * */
     void Wall::update(float time)
     {
+        //se mueve la pared en base a su velocidad
         x -= speed * time;
     }
 
+    /*
+     * inicializa las partes de la pared
+     * */
     void Wall::setUp()
     {
         pathPart.y = 150;
@@ -53,6 +53,9 @@ namespace helicopter
         calculatTopAndBot();
     }
 
+    /*
+     * Calculamos la parte de arriba y la de abajo en base al centro y al tamaño de la pantalla
+     * */
     void Wall::calculatTopAndBot()
     {
         botWall.y = 0;
@@ -65,15 +68,14 @@ namespace helicopter
 
     }
 
+    /*
+     * Calcula la variacion en altura y height en base a la pared recibida
+     * */
     void Wall::moveWall(const Wall wallBehind)
     {
 
-        do
-        {
-            pathPart.height = (float)randomRange((int)wallBehind.pathPart.height - 5 ,
-                                                 (int)wallBehind.pathPart.height + 5);
-        }while (pathPart.height < 270 && pathPart.height > 550);
-
+        //si no nos encontramos dentro de los limites calculamos un height con una variacion estableciza
+        //en caso de encontrarnos en los limites limitariamos la variacion para que el path no se salga de la pantalla
         if(wallBehind.pathPart.height > maxHeight)
         {
             pathPart.height = (float)randomRange((int)wallBehind.pathPart.height - 5 ,
@@ -90,8 +92,7 @@ namespace helicopter
                                                  (int)wallBehind.pathPart.height + 6);
         }
 
-
-
+        //en este caso hacemos lo mismo que en el height pero con la y
         if(wallBehind.pathPart.y < 0)
         {
             pathPart.y = (float)randomRange((int)wallBehind.pathPart.y,
@@ -111,8 +112,12 @@ namespace helicopter
         calculatTopAndBot();
     }
 
+    /*
+     * Aumentar la dificultad
+     * */
     void Wall::getHarder()
     {
+        //aqui se determina la dificultad maxima
         if(minHeight > 50 )
         {
             minHeight -= 5;
