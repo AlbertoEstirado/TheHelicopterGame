@@ -172,7 +172,7 @@ namespace helicopter
                                 (
                                         scale_then_translate_2d
                                                 (
-                                                        option.is_pressed ? 0.75f : 1.f,              // Escala de la opciÃ³n
+                                                        option.is_pressed ? 1.f : 1.f,              // Escala de la opciÃ³n
                                                         { option.position[0], option.position[1] }      // TraslaciÃ³n
                                                 )
                                 );
@@ -190,7 +190,7 @@ namespace helicopter
 
                     font.reset (new Raster_Font("fonts/impact.fnt", context));
                     Text_Layout textLayout(*font, score_string);
-                    canvas->draw_text({canvas_width/2.2, canvas_height/3.4f}, textLayout);
+                    canvas->draw_text({canvas_width/2.2, canvas_height/3.6f}, textLayout);
                 }
             }
         }

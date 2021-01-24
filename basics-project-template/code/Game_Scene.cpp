@@ -65,14 +65,13 @@ namespace helicopter
         {
             state = RUNNING;
         }
-        if (state == RUNNING || state == PAUSE || state == GAMEOVER)
+        if (state == RUNNING || state == PAUSE  || state == GAMEOVER)
         {
             switch (event.id)
             {
                 case ID(touch-started):
                 case ID(touch-moved):
                 {
-
                     touching = true;
                     break;
                 }
@@ -84,34 +83,24 @@ namespace helicopter
 
                     Point2f touch_location = { x, y };
 
-                   if (option_at (touch_location) == PAUSE && state == RUNNING)
-                   {
-                       pause(true);
-                   }
-                   else{
-                       pause(false);
-                   }
-                   if(state == GAMEOVER && option_at (touch_location) == MENU)
-                   {
-                       director.run_scene (shared_ptr< Scene >(new Menu_Scene));
-                   }
+                    if (option_at(touch_location) == MENU && state == GAMEOVER) {
+                        director.run_scene(shared_ptr<Scene>(new Menu_Scene));
+                    }
+                    if (option_at(touch_location) == TRY_AGAIN && state == GAMEOVER) {
+                        director.run_scene(shared_ptr<Scene>(new Game_Scene));
+                    }
+                    if (option_at(touch_location) == PAUSEICON && state == RUNNING) {
+                        pause(true);
+                    }
+                    if (option_at(touch_location) == RESUMEICON && state == PAUSE) {
+                        pause(false);
+                    }
 
                     break;
                 }
             }
         }
-        //if(state == GAMEOVER)
-        //{
-        //    switch (event.id) {
-        //        case ID(touch - started):
-        //        case ID(touch-moved):
-        //            {
-        //            //initialize();
-        //            //director.run_scene (shared_ptr< Scene >(new Menu_Scene));
-        //            break;
-        //        }
-        //    }
-        //}
+
     }
 
     void Game_Scene::update (float time)
@@ -122,7 +111,7 @@ namespace helicopter
             case WAITTING:   break;
             case PAUSE: break;
             case RUNNING: run  (time); break;
-            case GAMEOVER: gameoverScreen(); break;
+            case GAMEOVER: ; break;
         }
     }
 
@@ -153,34 +142,26 @@ namespace helicopter
                 }
 
 
+
                 if(state == GAMEOVER)
                 {
-                    canvas->fill_rectangle({options[GAMEOVERHUD].x,options[GAMEOVERHUD].y},
-                                           {options[GAMEOVERHUD].slice->width, options[GAMEOVERHUD].slice->height}
-                            ,options[GAMEOVERHUD].slice);
-
-                    canvas->fill_rectangle({options[MENU].x,options[MENU].y},
-                                           {options[MENU].slice->width, options[MENU].slice->height}
-                            ,options[MENU].slice);
+                    printOption(GAMEOVERHUD, *canvas);
+                    printOption(MENU, *canvas);
+                    printOption(TRY_AGAIN, *canvas);
                 }
 
                 if(state == RUNNING)
                 {
-                  canvas->fill_rectangle({options[PAUSEICON].x,options[PAUSEICON].y},
-                                         {options[PAUSEICON].slice->width, options[PAUSEICON].slice->height}
-                          ,options[PAUSEICON].slice);
+                    printOption(PAUSEICON, *canvas);
                 }
                 else if(state == PAUSE)
                 {
-                    canvas->fill_rectangle({options[RESUMEICON].x,options[RESUMEICON].y},
-                                           {options[RESUMEICON].slice->width, options[RESUMEICON].slice->height}
-                            ,options[RESUMEICON].slice);
+                    printOption(RESUMEICON, *canvas);
+                    printOption(PAUSETEXT, *canvas);
                 }
 
-
-
                 Text_Layout textLayout(*font, score_string);
-                canvas->draw_text({canvas_width/2, 150}, textLayout);
+                canvas->draw_text({canvas_width/2.2, canvas_height/5.f}, textLayout);
             }
         }
     }
@@ -244,22 +225,20 @@ namespace helicopter
 
     void Game_Scene::run (float time)
     {
+
         player->update(time);
-
         if(touching) { player->fly(time);}
-
         for (int i = 0; i < walls.size(); ++i) {
             walls[i].update(time);
         }
-
         for (int i = 0; i < player->smokes.size(); ++i) {
             player->smokes[i].update(time);
         }
-
         calculateWallsColision();
-
         manageWalls();
         manageSmokes();
+
+
     }
 
     void Game_Scene::gameover()
@@ -274,16 +253,7 @@ namespace helicopter
 
     void Game_Scene::gameoverScreen()
     {
-        Graphics_Context::Accessor contex = director.lock_graphics_context();
 
-        if(contex)
-        {
-            gameover_texture = Texture_2D::create(1,contex, "gameover.png");
-            if(gameover_texture)
-            {
-                contex->add(gameover_texture);
-            }
-        }
     }
 
     void Game_Scene::pause(bool b)
@@ -300,15 +270,24 @@ namespace helicopter
 
     void Game_Scene::configureUI()
     {
-        //options[TRY_AGAIN].slice = atlas->get_slice(ID(tryagain));
+        options[TRY_AGAIN].slice = atlas->get_slice(ID(tryagain));
         options[MENU].slice = atlas->get_slice(ID(menu));
         options[PAUSEICON].slice = atlas->get_slice(ID(pauseicon));
-        //options[PAUSE].slice = atlas->get_slice(ID(pause));
+        options[PAUSETEXT].slice = atlas->get_slice(ID(pause));
         options[RESUMEICON].slice = atlas->get_slice(ID(resumeicon));
         options[GAMEOVERHUD].slice = atlas->get_slice(ID(gameover));
 
+        options[PAUSETEXT].x = canvas_width /2 ;
+        options[PAUSETEXT].y = canvas_height /2;
+
+        options[TRY_AGAIN].x = canvas_width /2 ;
+        options[TRY_AGAIN].y = canvas_height /2;
+
+        options[GAMEOVERHUD].x = canvas_width/2 ;
+        options[GAMEOVERHUD].y = canvas_height/1.3;
+
         options[MENU].x = canvas_width /2 ;
-        options[MENU].y = canvas_height /2.5;
+        options[MENU].y = canvas_height /2.7;
 
         options[PAUSEICON].x = canvas_width - (options[PAUSEICON].slice->width + 20) ;
         options[PAUSEICON].y = canvas_height - (options[PAUSEICON].slice->height + 20);
@@ -316,8 +295,7 @@ namespace helicopter
         options[RESUMEICON].x = options[PAUSEICON].x;
         options[RESUMEICON].y = options[PAUSEICON].y;
 
-        options[GAMEOVERHUD].x = canvas_width/2 ;
-        options[GAMEOVERHUD].y = canvas_height/1.5;
+
 
     }
 
@@ -457,22 +435,27 @@ namespace helicopter
 
     }
 
+    void Game_Scene::printOption(Option_Id option, Canvas & canvas)
+    {
+        canvas.fill_rectangle({options[option].x,options[option].y},
+                               {options[option].slice->width, options[option].slice->height}
+                ,options[option].slice);
+    }
+
+
     int Game_Scene::option_at (const Point2f & point)
     {
         for (int index = 0; index < number_of_options; ++index)
         {
             const Option & option = options[index];
 
-            if
-                    (
-                    point[0] > option.x - option.slice->width  &&
+                if(point[0] > option.x - option.slice->width &&
                     point[0] < option.x + option.slice->width  &&
                     point[1] > option.y - option.slice->height &&
-                    point[1] < option.y + option.slice->height
-                    )
-            {
-                return index;
-            }
+                    point[1] < option.y + option.slice->height )
+                {
+                    return index;
+                }
         }
 
         return -1;

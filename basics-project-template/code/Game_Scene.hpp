@@ -60,9 +60,9 @@ namespace helicopter
 
         enum Option_Id
         {
-            //TRY_AGAIN,
+            TRY_AGAIN,
             MENU,
-            //PAUSETEXT,
+            PAUSETEXT,
             PAUSEICON,
             RESUMEICON,
             GAMEOVERHUD,
@@ -76,7 +76,7 @@ namespace helicopter
             float is_pressed;
         };
 
-        static const unsigned number_of_options = 3;
+        static const unsigned number_of_options = 6;
 
         Option options[number_of_options];
 
@@ -137,6 +137,7 @@ namespace helicopter
         void setUpPath();
         //Path generateNextPath(int lasty);
 
+        void printOption(Option_Id option, basics::Canvas & canvas);
         int option_at (const Point2f & point);
 
     };
