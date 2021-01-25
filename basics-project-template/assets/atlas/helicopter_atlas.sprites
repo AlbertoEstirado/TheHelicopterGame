@@ -13,6 +13,7 @@
       <spr name="pauseicon" x="364" y="88" w="56" h="72"/>
       <spr name="topscore" x="422" y="88" w="252" h="56"/>
       <spr name="tryagain" x="422" y="146" w="245" h="56"/>
+      <spr name="rules" x="422" y="204" w="160" h="56"/>
     </dir>
   </definitions>
 </img>

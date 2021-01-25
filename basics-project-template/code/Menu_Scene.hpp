@@ -51,6 +51,7 @@ namespace helicopter
             TITLE,
             PLAY,
             TOPSCORE,
+            RULES,
         };
 
         struct Option
@@ -60,7 +61,7 @@ namespace helicopter
             float   is_pressed;
         };
 
-        static const unsigned number_of_options = 3;        ///< Numero de opciones
+        static const unsigned number_of_options = 4;        ///< Numero de opciones
 
     private:
 

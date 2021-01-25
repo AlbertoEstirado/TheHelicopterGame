@@ -55,8 +55,7 @@ namespace helicopter
         std::unique_ptr<Player> player;                     ///< Player
         std::vector<Wall> walls;                            ///< Vector de paredes
 
-
-
+        Texture_Handle texturePlayer;
 
         enum Option_Id                                      ///< Ids de las opciones
         {

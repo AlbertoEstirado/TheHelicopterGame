@@ -21,13 +21,23 @@ namespace helicopter
     class Smoke
     {
     public:
-        int x;
-        int y;
-        float speed = 150;
+        int x;                  ///< Posicion en la coordenada X
+        int y;                  ///< Posicion en la coordenada Y
+        float speed = 150;      ///< Velociada a la que se mueve cada particula
 
 
         Smoke();
+
+        /**
+         * Renderizamos la particula con un tamaño
+         * @param canvas
+         */
         void render(Canvas & canvas);
+
+        /**
+         * Se ejecuta el movimiento de la particula
+         * @param time
+         */
         void update(float time);
     };
 

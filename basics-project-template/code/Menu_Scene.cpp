@@ -15,6 +15,8 @@
 #include <basics/Transformation>
 #include <basics/Application>
 #include <basics/Log>
+#include "Score_Manager.hpp"
+#include "Rules_Scene.hpp"
 
 using namespace basics;
 using namespace std;
@@ -40,7 +42,8 @@ namespace helicopter
         }
 
         load();
-
+        //Score_Manager::load_score();
+        //score_string = to_wstring(Score_Manager::loadedScore);
 
         return true;
     }
@@ -85,6 +88,11 @@ namespace helicopter
                     if (option_at (touch_location) == PLAY)
                     {
                         director.run_scene (shared_ptr< Scene >(new helicopter::Game_Scene));
+                    }
+
+                    if (option_at (touch_location) == RULES)
+                    {
+                        director.run_scene (shared_ptr< Scene >(new helicopter::Rules_Scene));
                     }
 
                     break;
@@ -203,17 +211,21 @@ namespace helicopter
         options[PLAY].slice = atlas->get_slice (ID(play));
         options[TITLE].slice = atlas->get_slice(ID(helicoptertitle));
         options[TOPSCORE].slice = atlas->get_slice(ID(topscore));
+        options[RULES].slice = atlas->get_slice(ID(rules));
+
 
 
         options[TITLE].position[0] = canvas_width/2;
-        options[TITLE].position[1] = canvas_height/1.2f;
+        options[TITLE].position[1] = canvas_height/1.1f;
 
         options[PLAY].position[0] = canvas_width/2;
-        options[PLAY].position[1] = canvas_height/2;
+        options[PLAY].position[1] = canvas_height/1.7f;
 
         options[TOPSCORE].position[0] = canvas_width/2;
         options[TOPSCORE].position[1] = canvas_height/2.6f;
 
+        options[RULES].position[0] = canvas_width/2;
+        options[RULES].position[1] = canvas_height/2.05f;
 
         initialize ();
     }
