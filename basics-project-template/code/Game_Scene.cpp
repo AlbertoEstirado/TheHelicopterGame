@@ -81,12 +81,15 @@ namespace helicopter
 
                     Point2f touch_location = { x, y };
 
+                    //Calculamos input con las options
+
                     if (option_at(touch_location) == MENU && state == GAMEOVER) {
                         director.run_scene(shared_ptr<Scene>(new Menu_Scene));
                     }
                     if (option_at(touch_location) == TRY_AGAIN && state == GAMEOVER) {
-                        director.run_scene(shared_ptr<Scene>(new Game_Scene));
+                        initialize();
                     }
+
                     if (option_at(touch_location) == PAUSEICON && state == RUNNING) {
                         pause(true);
                     }
@@ -115,7 +118,7 @@ namespace helicopter
 
     void Game_Scene::render (basics::Graphics_Context::Accessor & context)
     {
-        if (!suspended && (state == RUNNING || state == WAITTING || state == GAMEOVER || state == PAUSE))
+        if (!suspended &&  state != LOADING )//(state == RUNNING || state == WAITTING || state == GAMEOVER || state == PAUSE))
         {
             Canvas * canvas = context->get_renderer< Canvas > (ID(canvas));
 
@@ -129,18 +132,18 @@ namespace helicopter
                 canvas->clear        ();
                 canvas->set_color    (1, 1, 1);
 
-
+                //Renderizamos player
                 if (player)
                 {
                     player->render(*canvas);
                 }
 
+                //Renderizamos walls
                 for (int i = 0; i < walls.size(); ++i) {
                     walls[i].render(*canvas);
                 }
 
-
-
+                //Renderizamos pantalla de gameover
                 if(state == GAMEOVER)
                 {
                     printOption(GAMEOVERHUD, *canvas);
@@ -148,12 +151,14 @@ namespace helicopter
                     printOption(TRY_AGAIN, *canvas);
                 }
 
+                //Renderizamos pantalla de running
                 if(state == RUNNING)
                 {
                     printOption(PAUSEICON, *canvas);
                 }
                 else if(state == PAUSE)
                 {
+                    //Renderizamos pantalla de pause
                     printOption(RESUMEICON, *canvas);
                     printOption(PAUSETEXT, *canvas);
                 }
@@ -202,40 +207,49 @@ namespace helicopter
 
     void Game_Scene::start()
     {
+        //Ejecutamos los starts
+
         player->start();
+
+        //Generamos el mapa con las paredes
 
         for (int i = 0; i < walls.size(); ++i) {
             walls[i].setUp();
             walls[i].x = i*walls[i].botWall.width;
 
+            //Movemos cada pared en base a la anterior
             if(i > 0){
              walls[i].moveWall(walls[i-1]);
             }
         }
-
-
     }
 
     void Game_Scene::run (float time)
     {
+        //Ejecutamos todos los updates de la escena
 
         player->update(time);
+
         if(touching) { player->fly(time);}
+
         for (int i = 0; i < walls.size(); ++i) {
             walls[i].update(time);
         }
+
         for (int i = 0; i < player->smokes.size(); ++i) {
             player->smokes[i].update(time);
         }
+
         calculateWallsColision();
         manageWalls();
         manageSmokes();
-
-
     }
 
     void Game_Scene::gameover()
     {
+        //En caso de que la score obtenida sea mayor a la cargada anteriormente,
+        //lo sobreescribimos.
+
         if(score > scoreloaded)
         {
             saveScore();
@@ -247,6 +261,8 @@ namespace helicopter
 
     void Game_Scene::pause(bool b)
     {
+        //En base a b, cambiamos el state de la escena
+
         if(b == true)
         {
             state = PAUSE;
@@ -259,6 +275,8 @@ namespace helicopter
 
     void Game_Scene::configureUI()
     {
+        //Asignamos slices del atlas a la option
+
         options[TRY_AGAIN].slice = atlas->get_slice(ID(tryagain));
         options[MENU].slice = atlas->get_slice(ID(menu));
         options[PAUSEICON].slice = atlas->get_slice(ID(pauseicon));
@@ -266,8 +284,10 @@ namespace helicopter
         options[RESUMEICON].slice = atlas->get_slice(ID(resumeicon));
         options[GAMEOVERHUD].slice = atlas->get_slice(ID(gameover));
 
+        //Asiganmos coordenada en las que se va a printear
+
         options[PAUSETEXT].x = canvas_width /2 ;
-        options[PAUSETEXT].y = canvas_height /2;
+        options[PAUSETEXT].y = canvas_height /1.7;
 
         options[TRY_AGAIN].x = canvas_width /2 ;
         options[TRY_AGAIN].y = canvas_height /2;
@@ -278,14 +298,11 @@ namespace helicopter
         options[MENU].x = canvas_width /2 ;
         options[MENU].y = canvas_height /2.7;
 
-        options[PAUSEICON].x = canvas_width - (options[PAUSEICON].slice->width + 20) ;
+        options[PAUSEICON].x = canvas_width - (options[PAUSEICON].slice->width + 20);
         options[PAUSEICON].y = canvas_height - (options[PAUSEICON].slice->height + 20);
 
-        options[RESUMEICON].x = options[PAUSEICON].x;
-        options[RESUMEICON].y = options[PAUSEICON].y;
-
-
-
+        options[RESUMEICON].x = canvas_width - (options[RESUMEICON].slice->width + 100);
+        options[RESUMEICON].y = canvas_height - (options[RESUMEICON].slice->height + 20);
     }
 
     void Game_Scene::loadScore()
@@ -309,9 +326,7 @@ namespace helicopter
             {
                 basics::log.e ("ERROR at loading score in game_scene failed reading save.data.");
             }
-
         }
-
     }
 
     void Game_Scene::saveScore()
@@ -321,7 +336,7 @@ namespace helicopter
         basics::log.d (string("saving score and creating file at ") + path);
 
         ofstream writer(path, ofstream::binary | ofstream::trunc);
-        score = 7;
+
         if(writer)
         {
             writer.write ((char *)&score, sizeof(score));
@@ -344,6 +359,9 @@ namespace helicopter
 
     void Game_Scene::manageWalls()
     {
+        //Comprobamos si la pared en el index de firstwall se encuentra a la fuera de la pantalla
+        //en la coordenada X. Si se sale, la posicionamos al final de la cola.
+
         if(walls[firstWall].x < 0 - walls[firstWall].pathPart.width)
         {
             if(firstWall == 0)
@@ -357,18 +375,23 @@ namespace helicopter
                 walls[firstWall].moveWall(walls[firstWall - 1]);
             }
 
+            //Si se sale del index reseteamos a 0
             if(firstWall >= walls.size()-1)
             {
                 firstWall = 0;
             }
             else
             {
+                //Si no, lo aumentamos
                 firstWall++;
             }
 
+            //Cada vez que movemos una pared aumentamos la score
             score++;
             score_string = to_wstring(score);
-            if(score % 50 == 0)
+
+            //Cada X movimientos hacemos que todas las paredes se vuelven mas dificiles
+            if(score % 30 == 0)
             {
                 for (int i = 0; i < walls.size()-1; ++i)
                 {
@@ -380,6 +403,8 @@ namespace helicopter
 
     void Game_Scene::manageSmokes()
     {
+        //Si el smoke sale de la pantalla lo volvemos a posicionar en la posicion del player
+
         for (int i = 0; i < player->smokes.size(); ++i) {
             if(player->smokes[i].x < 0)
             {
@@ -391,6 +416,8 @@ namespace helicopter
 
     void Game_Scene::calculateWallsColision()
     {
+        //Recorremos todas las parede y comprobamos si el player se encuentra dentro de las partes bot y top de las walls
+
         for (int i = 0; i < walls.size() - 1; ++i)
         {
             if(walls[i].x < player->get_position_x() &&
@@ -406,9 +433,10 @@ namespace helicopter
     }
 
 
-
     void Game_Scene::printOption(Option_Id option, Canvas & canvas)
     {
+        //Printeamos la opcion
+
         canvas.fill_rectangle({options[option].x,options[option].y},
                                {options[option].slice->width, options[option].slice->height}
                 ,options[option].slice);
@@ -417,9 +445,13 @@ namespace helicopter
 
     int Game_Scene::option_at (const Point2f & point)
     {
+        //Recorremos todas las opciones
+
         for (int index = 0; index < number_of_options; ++index)
         {
             const Option & option = options[index];
+
+                //Si el point esta dentro de la opcion retorna el index
 
                 if(point[0] > option.x - option.slice->width &&
                     point[0] < option.x + option.slice->width  &&

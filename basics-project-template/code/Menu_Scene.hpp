@@ -35,10 +35,10 @@ namespace helicopter
     {
         typedef std::unique_ptr< basics::Raster_Font > Font_Handle;
 
-        Font_Handle font;  //fuente
-        std::wstring score_string; //string en la que guardamos el score
+        Font_Handle font;                               ///< Fuente
+        std::wstring score_string;                      ///< String en la que guardamos el score
 
-        enum State  //estado de las escenas
+        enum State                                      ///< Estado de las escenas
         {
             LOADING,
             READY,
@@ -46,7 +46,7 @@ namespace helicopter
             ERROR
         };
 
-        enum Option_Id  //id de las diferentes opciones
+        enum Option_Id                                  ///< Id de las diferentes opciones
         {
             TITLE,
             PLAY,
@@ -60,7 +60,7 @@ namespace helicopter
             float   is_pressed;
         };
 
-        static const unsigned number_of_options = 3; //numero de opciones
+        static const unsigned number_of_options = 3;        ///< Numero de opciones
 
     private:
 
@@ -76,7 +76,7 @@ namespace helicopter
 
         std::unique_ptr< Atlas > atlas;                     ///< Atlas que contiene las imÃ¡genes de las opciones del menÃº
 
-        int loadedscore;  //score cargada
+        int loadedscore;                                    ///< Score cargada
 
     public:
 
@@ -111,11 +111,21 @@ namespace helicopter
 
     private:
 
+        /**
+         * Setear las posiciones de los slices del atlas
+         */
+        void configure_options ();
 
-        void configure_options (); //setear las posiciones de los slices del atlas
-
+        /**
+         * Retorta el index de opciones que obtenga las coordenadas pasadas por parametro
+         * @param point
+         * @return
+         */
         int option_at (const Point2f & point);
 
+        /**
+         * Cargar score
+         */
         void loadScore();
 
     };

@@ -103,6 +103,10 @@ namespace helicopter
 
                 if (context)
                 {
+                    font.reset (new Raster_Font("fonts/impact.fnt", context));
+
+                    load();
+
                     // Se carga el atlas:
 
                     atlas.reset (new Atlas("atlas/helicopter_atlas.sprites", context));
@@ -127,14 +131,6 @@ namespace helicopter
    {
        if (!suspended)
        {
-           //Graphics_Context::Accessor context = director.lock_graphics_context ();
-//
-           //if (context)
-           //{
-           //    font.reset (new Raster_Font("fonts/impact.fnt", context));
-//
-           //}
-
            loadScore();
            score_string = to_wstring(loadedscore);
 
@@ -188,7 +184,9 @@ namespace helicopter
 
 
 
-                    font.reset (new Raster_Font("fonts/impact.fnt", context));
+                    //font.reset (new Raster_Font("fonts/impact.fnt", context));
+
+
                     Text_Layout textLayout(*font, score_string);
                     canvas->draw_text({canvas_width/2.2, canvas_height/3.6f}, textLayout);
                 }
@@ -259,10 +257,14 @@ namespace helicopter
           if (!reader.fail () && !reader.bad ())
           {
               loadedscore = auxscoreloaed;
+              basics::log.e ("*****************************************************************************************");
+              basics::log.e (std::to_string(loadedscore));
+
           }
           else
           {
               basics::log.e ("ERROR at loading score in game_scene failed reading save.data.");
+              basics::log.e ("------------------------------------------------------------------------------------------------");
           }
 
       }

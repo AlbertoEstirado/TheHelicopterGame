@@ -41,7 +41,7 @@ namespace helicopter
         unsigned canvas_height;
 
         Timer timer;
-        static constexpr float TIMEWAITING = 2;  //Tiempo que va a estar el logo en pantalla
+        static constexpr float TIMEWAITING = 2;  ///< Tiempo que va a estar el logo en pantalla
 
         float opacity;
 

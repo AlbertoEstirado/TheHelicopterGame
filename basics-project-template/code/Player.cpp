@@ -39,7 +39,8 @@ namespace helicopter
     {
         if (visible)
         {
-            //renderizamos los smokes
+            //Renderizamos los smokes
+
             for (int i = 0; i < smokes.size(); ++i) {
                 smokes[i].render(canvas);
             }
@@ -50,9 +51,14 @@ namespace helicopter
 
     void Player::start()
     {
-        set_position({240,360});
-        for (int i = 0; i < smokes.size(); ++i) {
+        //Seteamos coordenada iniciales del player
 
+        set_position({240,360});
+
+        //Seteamos las posiciones de todos los humos del player
+
+        for (int i = 0; i < smokes.size(); ++i)
+        {
             smokes[i].y = get_position_y();
             smokes[i].x = get_position_x() - 10*(i+1);
         }

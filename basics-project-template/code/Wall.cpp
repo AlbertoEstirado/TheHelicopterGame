@@ -31,19 +31,14 @@ namespace helicopter
         canvas.fill_rectangle({x,botWall.y}, {botWall.width, botWall.height});
     }
 
-
-    /*
-     * Funcion que se ejecuta cada frame
-     * */
     void Wall::update(float time)
     {
-        //se mueve la pared en base a su velocidad
+        //Se mueve la pared en base a su velocidad
         x -= speed * time;
     }
 
-    /*
-     * inicializa las partes de la pared
-     * */
+    //---------------------     Walls Management     --------------------
+
     void Wall::setUp()
     {
         pathPart.y = 150;
@@ -53,9 +48,7 @@ namespace helicopter
         calculatTopAndBot();
     }
 
-    /*
-     * Calculamos la parte de arriba y la de abajo en base al centro y al tamaño de la pantalla
-     * */
+
     void Wall::calculatTopAndBot()
     {
         botWall.y = 0;
@@ -68,13 +61,11 @@ namespace helicopter
 
     }
 
-    /*
-     * Calcula la variacion en altura y height en base a la pared recibida
-     * */
+
     void Wall::moveWall(const Wall wallBehind)
     {
 
-        //si no nos encontramos dentro de los limites calculamos un height con una variacion estableciza
+        //Si no nos encontramos dentro de los limites calculamos un height con una variacion estableciza
         //en caso de encontrarnos en los limites limitariamos la variacion para que el path no se salga de la pantalla
         if(wallBehind.pathPart.height > maxHeight)
         {
@@ -92,7 +83,7 @@ namespace helicopter
                                                  (int)wallBehind.pathPart.height + 6);
         }
 
-        //en este caso hacemos lo mismo que en el height pero con la y
+        //En este caso hacemos lo mismo que en el height pero con la y
         if(wallBehind.pathPart.y < 0)
         {
             pathPart.y = (float)randomRange((int)wallBehind.pathPart.y,
@@ -112,12 +103,12 @@ namespace helicopter
         calculatTopAndBot();
     }
 
-    /*
-     * Aumentar la dificultad
-     * */
+
+    //---------------------        Gameplay        --------------------
+
     void Wall::getHarder()
     {
-        //aqui se determina la dificultad maxima
+        //Aqui se determina la dificultad maxima
         if(minHeight > 50 )
         {
             minHeight -= 5;
@@ -128,6 +119,7 @@ namespace helicopter
         }
     }
 
+    //---------------------      Utils         --------------------
 
      int Wall::randomRange(int min, int max) //range : [min, max]
     {

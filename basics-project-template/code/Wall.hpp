@@ -22,18 +22,18 @@ namespace helicopter
     {
         public:
 
-            float speed = 150;  //velocidad a la que se mueven las paredes
+            float speed = 150;    ///< Velocidad a la que se mueven las paredes
 
-            float x = 0;  //coordenada en x
+            float x = 0;          ///<coordenada en x
 
-            struct levelPart{  //estructura para definir las partes de una pared
+            struct levelPart{     ///<estructura para definir las partes de una pared
                 float y;
                 float width;
                 float height;
             };
 
-            int maxHeight = 400;  //valores de la generacion de mapa que impidan ser muy facil o imposible
-            int minHeight = 100;  //estos valores son los que se cambian para que el juego se vuelva mas dificil
+            int maxHeight = 400;  ///<valores de la generacion de mapa que impidan ser muy facil o imposible
+            int minHeight = 100;  ///<estos valores son los que se cambian para que el juego se vuelva mas dificil
 
             //---------------------partes de una pared--------------------
             levelPart topWall;
@@ -45,17 +45,40 @@ namespace helicopter
 
             void render(Canvas & canvas);
 
-            void update(float time);  //comportamientos que se ejecutan cada frame
+            /**
+             * Comportamientos que se ejecutan cada frame
+             * @param time
+             */
+            void update(float time);
 
-            void setUp();  //setea el path
+            /**
+             * Setea el path
+             */
+            void setUp();
 
-            void calculatTopAndBot();  //esta funcion calcula todas las partes del nivel en base a la del path
+            /**
+             * Esta funcion calcula todas las partes del nivel en base a la del path
+             */
+            void calculatTopAndBot();
 
-            void moveWall(const Wall wallBehind); //coloca la pared actual en base a la pared recibida dentro de unos maximos y minimos
+            /**
+             * Coloca la pared actual en base a la pared recibida dentro de unos maximos y minimos
+             * @param wallBehind
+             */
+            void moveWall(const Wall wallBehind);
 
-            void getHarder();  //cambia los valores maximos y minimos dentro de unos limites
+            /**
+             * Cambia los valores maximos y minimos dentro de unos limites
+             */
+            void getHarder();
 
-            int randomRange(int min, int max);  //funcion aux para calcular numeros random
+            /**
+             * Funcion aux para calcular numeros random
+             * @param min
+             * @param max
+             * @return
+             */
+            int randomRange(int min, int max);
 
 
     };

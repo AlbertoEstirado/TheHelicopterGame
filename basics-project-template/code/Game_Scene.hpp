@@ -32,10 +32,10 @@ namespace helicopter
 
     public:
 
-        Font_Handle font;  //fuentes
-        std::wstring score_string;  //string de la score
+        Font_Handle font;                                   ///< Fuentes
+        std::wstring score_string;                          ///< String de la score
 
-        enum State  //estados de la escena
+        enum State                                          ///< Estados de la escena
         {
             LOADING,
             RUNNING,
@@ -52,13 +52,13 @@ namespace helicopter
         unsigned       canvas_width;
         unsigned       canvas_height;
 
-        std::unique_ptr<Player> player;  //player
-        std::vector<Wall> walls;   //vector de paredes
+        std::unique_ptr<Player> player;                     ///< Player
+        std::vector<Wall> walls;                            ///< Vector de paredes
 
-        Texture_Handle texturePlayer;
-        std::shared_ptr<Texture_2D> gameover_texture;
 
-        enum Option_Id  //ids de las opciones
+
+
+        enum Option_Id                                      ///< Ids de las opciones
         {
             TRY_AGAIN,
             MENU,
@@ -73,23 +73,22 @@ namespace helicopter
             const Atlas::Slice * slice;
             int x;
             int y;
-            float is_pressed;
         };
 
-        static const unsigned number_of_options = 6; //numero de opciones
+        static const unsigned number_of_options = 6;         ///< Numero de opciones
 
-        Option options[number_of_options];  //array de opciones
+        Option options[number_of_options];                  ///< Array de opciones
 
-        std::unique_ptr<Atlas> atlas;  //atlas
+        std::unique_ptr<Atlas> atlas;                       ///< Atlas
 
 
-        float          x, y;  //cordenadas del input del player
+        float          x, y;                                ///< Coordenadas del input del player
 
-        int firstWall = 0; //numero de paredes que se han desplazado al final de la pantalla
+        int firstWall = 0;                                  ///< Numero de paredes que se han desplazado al final de la pantalla
 
-        int score = 0; //score
+        int score = 0;                                      ///< Score
 
-        int scoreloaded; //score cargada
+        int scoreloaded;                                    ///< Score cargada
 
 
 
@@ -115,23 +114,61 @@ namespace helicopter
         void load ();
         void start();
         void run  (float time);
-        void gameover();  //cambia el estado de la partida a GAMEOVER
 
+        /**
+         *Cambia el estado de la partida a GAMEOVER
+         * */
+        void gameover();
+
+        /**
+         * Recibe un parametro que hace establece el estado de PAUSE (true) y RUNNING (false)
+         * @param b
+         */
         void pause(bool b);
 
-        void configureUI();  //setea las posiciones de hud
+        /**
+         *Setea las posiciones de hud
+         * */
+        void configureUI();
 
-        void loadScore();  //cargar score
-        void saveScore();  //guardar score
+        /**
+         *Cargar score
+         * */
+        void loadScore();
+
+        /**
+         *Guardar score
+         * */
+        void saveScore();
 
         void draw_slice (basics::Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id);
 
-        void manageWalls();  //gestion de las parades de la partida
-        void manageSmokes();  //gestion de los smokes del player
-        void calculateWallsColision();  //calcula las colisiones del player con las paredes
+        /**
+         *Gestion de las parades de la partida
+         * */
+        void manageWalls();
 
-        void printOption(Option_Id option, basics::Canvas & canvas); //funcion que renderiza una opcion en el canvas
-        int option_at (const Point2f & point);  //devuelve el id_option en el que se contengas las coordenadas recibidas
+        /**
+         *Gestion de los smokes del player
+         * */
+        void manageSmokes();
+
+        /**
+         *Calcula las colisiones del player con las paredes
+         * */
+        void calculateWallsColision();
+
+        /**
+         *Funcion que renderiza una opcion en el canvas
+         * @param canvas
+         * */
+        void printOption(Option_Id option, basics::Canvas & canvas);
+
+        /**
+         *Devuelve el id_option en el que se contengas las coordenadas recibidas
+         * @param point
+         * */
+        int option_at (const Point2f & point);
 
     };
 

@@ -25,18 +25,30 @@ namespace helicopter
     {
         public:
 
-            static constexpr float GRAVITY = 150;  //valor que controla la velocidad en la que se mueve verticalmente
+            static constexpr float GRAVITY = 150;   ///< Valor que controla la velocidad en la que se mueve verticalmente
 
-            std::vector<Smoke> smokes;     //humos que siguen al player
+            std::vector<Smoke> smokes;              ///< Humos que siguen al player
 
-            Player(Texture_2D *texture);  //textura
+            Player(Texture_2D *texture);            ///< Textura
 
             void render(Canvas & canvas);
 
-            void start();               //se inicializa
-            void update(float time);    //comportamiento que necesitan ejecutarse cada frame
+            /**
+             * Se inicializa
+             */
+            void start();
 
-            void fly(float time);  //función de volar
+            /**
+             * Comportamientos que necesitan ejecutarse cada frame
+             * @param time
+             */
+            void update(float time);
+
+            /**
+             * Funcion de volar
+             * @param time
+             */
+            void fly(float time);
     };
 
 
