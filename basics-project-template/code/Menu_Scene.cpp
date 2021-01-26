@@ -196,7 +196,7 @@ namespace helicopter
 
 
                     Text_Layout textLayout(*font, score_string);
-                    canvas->draw_text({canvas_width/2.2, canvas_height/3.6f}, textLayout);
+                    canvas->draw_text({canvas_width/2.2, canvas_height/3.8f}, textLayout);
                 }
             }
         }
@@ -216,16 +216,16 @@ namespace helicopter
 
 
         options[TITLE].position[0] = canvas_width/2;
-        options[TITLE].position[1] = canvas_height/1.1f;
+        options[TITLE].position[1] = canvas_height/1.15f;
 
-        options[PLAY].position[0] = canvas_width/2;
-        options[PLAY].position[1] = canvas_height/1.7f;
+        options[PLAY].position[0] = canvas_width/1.7f;
+        options[PLAY].position[1] = canvas_height/1.9f;
 
         options[TOPSCORE].position[0] = canvas_width/2;
-        options[TOPSCORE].position[1] = canvas_height/2.6f;
+        options[TOPSCORE].position[1] = canvas_height/2.7f;
 
-        options[RULES].position[0] = canvas_width/2;
-        options[RULES].position[1] = canvas_height/2.05f;
+        options[RULES].position[0] = canvas_width/2.4f;
+        options[RULES].position[1] = canvas_height/1.9f;
 
         initialize ();
     }

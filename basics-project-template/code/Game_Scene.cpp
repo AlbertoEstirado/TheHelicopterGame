@@ -83,10 +83,10 @@ namespace helicopter
 
                     //Calculamos input con las options
 
-                    if (option_at(touch_location) == MENU && state == GAMEOVER) {
+                    if (option_at(touch_location) == MENU && (state == GAMEOVER ||state == PAUSE)) {
                         director.run_scene(shared_ptr<Scene>(new Menu_Scene));
                     }
-                    if (option_at(touch_location) == TRY_AGAIN && state == GAMEOVER) {
+                    if (option_at(touch_location) == TRY_AGAIN && (state == GAMEOVER ||state == PAUSE)) {
                         initialize();
                     }
 
@@ -155,12 +155,15 @@ namespace helicopter
                 if(state == RUNNING)
                 {
                     printOption(PAUSEICON, *canvas);
+
                 }
                 else if(state == PAUSE)
                 {
                     //Renderizamos pantalla de pause
                     printOption(RESUMEICON, *canvas);
                     printOption(PAUSETEXT, *canvas);
+                    printOption(MENU, *canvas);
+                    printOption(TRY_AGAIN, *canvas);
                 }
 
                 Text_Layout textLayout(*font, score_string);
@@ -287,7 +290,7 @@ namespace helicopter
         //Asiganmos coordenada en las que se va a printear
 
         options[PAUSETEXT].x = canvas_width /2 ;
-        options[PAUSETEXT].y = canvas_height /1.7;
+        options[PAUSETEXT].y = canvas_height /1.5;
 
         options[TRY_AGAIN].x = canvas_width /2 ;
         options[TRY_AGAIN].y = canvas_height /2;

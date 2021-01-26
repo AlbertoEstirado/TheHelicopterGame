@@ -22,27 +22,45 @@ namespace helicopter
     class Rules_Scene : public basics::Scene
     {
         typedef std::unique_ptr< basics::Raster_Font > Font_Handle;
-        typedef std::shared_ptr< basics::Texture_2D > Texture_Handle;
 
-    public:
+        Font_Handle font;                               ///< Fuente
 
-        enum State
+        enum State                                      ///< Estado de las escenas
         {
             LOADING,
-            RUNNING,
+            READY,
+            FINISHED,
+            ERROR
         };
 
-        State          state;
-        bool           suspended;
+        enum Option_Id                                  ///< Id de las diferentes opciones
+        {
+            MENU,
+        };
 
-        unsigned       canvas_width;
-        unsigned       canvas_height;
+        struct Option
+        {
+            const Atlas::Slice * slice;
+            Point2f position;
+            float   is_pressed;
+        };
 
-        Texture_Handle texture;
-        float          x, y;
+        static const unsigned number_of_options = 1;        ///< Numero de opciones
 
-        Font_Handle font;
-        std::wstring rules = L"Press to rise and not crash into the walls";
+    private:
+
+        State    state;                                     ///< Estado de la escena.
+        bool     suspended;                                 ///< true cuando la escena estÃ¡ en segundo plano y viceversa.
+
+        unsigned canvas_width;                              ///< Ancho de la resoluciÃ³n virtual usada para dibujar.
+        unsigned canvas_height;                             ///< Alto  de la resoluciÃ³n virtual usada para dibujar.
+
+        Option   options[number_of_options];                ///< Datos de las opciones del menÃº
+
+        std::unique_ptr< Atlas > atlas;                     ///< Atlas que contiene las imÃ¡genes de las opciones del menÃº
+
+        std::wstring rules = L"Press to rise and avoid crashing into the walls.";
+
 
     public:
 
@@ -53,21 +71,42 @@ namespace helicopter
             return { canvas_width, canvas_height };
         }
 
-        bool initialize () override;
-        void suspend    () override;
-        void resume     () override;
 
-        void handle     (basics::Event & event) override;
-        void update     (float time) override;
-        void render     (basics::Graphics_Context::Accessor & context) override;
+        bool initialize () override;
+
+        void suspend () override
+        {
+            suspended = true;
+        }
+
+        void resume () override
+        {
+            suspended = false;
+        }
+
+
+        void handle (basics::Event & event) override;
+
+        void update (float time) override;
+
+        void render (Graphics_Context::Accessor & context) override;
 
     private:
 
-        void load ();
-        void run  (float time);
+        /**
+         * Setear las posiciones de los slices del atlas
+         */
+        void configure_options ();
+
+        /**
+         * Retorta el index de opciones que obtenga las coordenadas pasadas por parametro
+         * @param point
+         * @return
+         */
+        int option_at (const Point2f & point);
+
+
 
     };
-
-
 
 }

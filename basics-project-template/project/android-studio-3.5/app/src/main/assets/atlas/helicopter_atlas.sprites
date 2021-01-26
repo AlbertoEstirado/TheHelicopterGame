@@ -3,17 +3,17 @@
 <img name="helicopter_atlas.png" w="1024" h="1024">
   <definitions>
     <dir name="/">
-      <spr name="gameover" x="2" y="2" w="378" h="84"/>
-      <spr name="helicopterintro" x="382" y="2" w="119" h="77"/>
-      <spr name="helicoptertitle" x="2" y="88" w="360" h="180"/>
-      <spr name="menu" x="503" y="2" w="140" h="56"/>
-      <spr name="pause" x="645" y="2" w="184" h="64"/>
-      <spr name="resumeicon" x="831" y="2" w="56" h="72"/>
-      <spr name="play" x="889" y="2" w="126" h="56"/>
-      <spr name="pauseicon" x="364" y="88" w="56" h="72"/>
-      <spr name="topscore" x="422" y="88" w="252" h="56"/>
-      <spr name="tryagain" x="422" y="146" w="245" h="56"/>
-      <spr name="rules" x="422" y="204" w="160" h="56"/>
+      <spr name="gameover" x="1" y="1" w="378" h="84"/>
+      <spr name="helicopterintro" x="380" y="1" w="119" h="77"/>
+      <spr name="helicoptertitle" x="1" y="86" w="360" h="180"/>
+      <spr name="menu" x="500" y="1" w="140" h="56"/>
+      <spr name="pause" x="641" y="1" w="184" h="64"/>
+      <spr name="resumeicon" x="826" y="1" w="56" h="72"/>
+      <spr name="play" x="883" y="1" w="126" h="56"/>
+      <spr name="pauseicon" x="362" y="86" w="56" h="72"/>
+      <spr name="tryagain" x="419" y="86" w="245" h="56"/>
+      <spr name="rules" x="419" y="143" w="160" h="56"/>
+      <spr name="topscore" x="665" y="86" w="267" h="56"/>
     </dir>
   </definitions>
 </img>
