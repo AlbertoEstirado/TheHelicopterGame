@@ -140,6 +140,7 @@ namespace helicopter
        if (!suspended)
        {
            loadScore();
+           //loadedscore = helicopter::Score_Manager().load_score();
            score_string = to_wstring(loadedscore);
 
        }

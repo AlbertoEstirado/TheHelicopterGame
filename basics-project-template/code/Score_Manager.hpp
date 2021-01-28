@@ -13,6 +13,8 @@
 #include <basics/Scene>
 #include <basics/Texture_2D>
 #include "istream"
+#include <fstream>
+
 
 
 namespace helicopter
@@ -30,18 +32,19 @@ namespace helicopter
         }
 
 
+        Score_Manager() = default;
+
+        ~Score_Manager() = default;
+
     private:
 
-        Score_Manager() = default;
         Score_Manager(const Score_Manager & ) = delete;
-        ~Score_Manager() = default;
 
     public:
 
         static int load_score ();
         bool save_score (int newScore);
 
-        static int get_loadedScore();
 
     };
 

@@ -17,6 +17,7 @@
 #include <basics/Translation>
 #include <math.h>
 #include <basics/Application>
+#include "Score_Manager.hpp"
 
 
 using namespace basics;
@@ -31,6 +32,7 @@ namespace helicopter
         touching = false;
         walls.resize(130);
 
+        //scoreloaded = helicopter::Score_Manager().load_score();
         loadScore();
     }
 
@@ -255,6 +257,7 @@ namespace helicopter
 
         if(score > scoreloaded)
         {
+            //helicopter::Score_Manager().save_score(score);
             saveScore();
         }
 
@@ -390,11 +393,11 @@ namespace helicopter
             }
 
             //Cada vez que movemos una pared aumentamos la score
-            score++;
+            score+=30;
             score_string = to_wstring(score);
 
             //Cada X movimientos hacemos que todas las paredes se vuelven mas dificiles
-            if(score % 30 == 0)
+            if(score % 50 == 0)
             {
                 for (int i = 0; i < walls.size()-1; ++i)
                 {

@@ -24,7 +24,7 @@ namespace helicopter
 
     private:
 
-        enum State
+        enum State                               ///< Estado en el que se encuentra la escena
         {
             UNINITIALIZED,
             LOADING,
@@ -43,7 +43,7 @@ namespace helicopter
         Timer timer;
         static constexpr float TIMEWAITING = 2;  ///< Tiempo que va a estar el logo en pantalla
 
-        float opacity;
+        float opacity;                           ///< Opacidad de la textura intro
 
         std::shared_ptr<Texture_2D> intro_texture;
 

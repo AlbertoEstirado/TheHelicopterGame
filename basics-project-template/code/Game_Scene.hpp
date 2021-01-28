@@ -115,56 +115,61 @@ namespace helicopter
         void run  (float time);
 
         /**
-         *Cambia el estado de la partida a GAMEOVER
+         * Cambia el estado de la partida a GAMEOVER, esto hara que se renderize el menu de game over con sus respectivas opciones
          * */
         void gameover();
 
         /**
-         * Recibe un parametro que hace establece el estado de PAUSE (true) y RUNNING (false)
+         * Recibe un parametro que hace establece el estado de PAUSE (true) y RUNNING (false), esto cambia el estado de la escena
+         * y printea el menu de pause con las opciones.
          * @param b
          */
         void pause(bool b);
 
         /**
-         *Setea las posiciones de hud
+         * Setea las posiciones de hud y sus slices del atlas. Esto es para definir las posiciones y sprites del hud.
          * */
         void configureUI();
 
         /**
-         *Cargar score
+         * Cargar score al inicio de la escena para tener una referencia de la ultima score mas alta.
          * */
         void loadScore();
 
         /**
-         *Guardar score
+         * Guardar score, en caso de que la nueva score se mayo a la que hemos cargado, se sobreescribe.
          * */
         void saveScore();
 
         void draw_slice (basics::Canvas * canvas, const basics::Point2f & where, basics::Atlas & atlas, basics::Id slice_id);
 
         /**
-         *Gestion de las parades de la partida
+         * Gestion de las parades de la partida. En esta funcion se comprueba si las pareces salen de la izquierda de la pantalla
+         * para moverlas al final. Ademas las posiciona y aumenta el score del player en base a la distancia recorrida.
          * */
         void manageWalls();
 
         /**
-         *Gestion de los smokes del player
+         * Gestion de los smokes del player. Comprueba cuando las particulas de los smokes salen de la pantalla y las reposiciona
+         * a la posicion actual del player.
          * */
         void manageSmokes();
 
         /**
-         *Calcula las colisiones del player con las paredes
+         * Calcula las colisiones del player con las paredes. Recorremos todas las pareces y comprobamos si el player
+         * se encuentra.
          * */
         void calculateWallsColision();
 
         /**
-         *Funcion que renderiza una opcion en el canvas
+         * Funcion que renderiza una opcion en el canvas, esto es para tener mas organizado el codigo
          * @param canvas
          * */
         void printOption(Option_Id option, basics::Canvas & canvas);
 
         /**
-         *Devuelve el id_option en el que se contengas las coordenadas recibidas
+         * Devuelve el id_option en el que se contengas las coordenadas recibidas. Esto es para ejecutar acciones en base
+         * a opcion presionada.
          * @param point
          * */
         int option_at (const Point2f & point);

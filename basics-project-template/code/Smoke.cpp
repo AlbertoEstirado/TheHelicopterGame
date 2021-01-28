@@ -25,8 +25,8 @@ namespace helicopter
 {
     Smoke::Smoke()
     {
-        x=0;
-        y=0;
+        x = 0;
+        y = 0;
     }
 
     void Smoke::render(Canvas &canvas)

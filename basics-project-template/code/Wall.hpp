@@ -46,29 +46,32 @@ namespace helicopter
             void render(Canvas & canvas);
 
             /**
-             * Comportamientos que se ejecutan cada frame
+             * Comportamientos que se ejecutan cada frame. En este caso el movimiento hacia la izquierda de
+             * la pantalla.
              * @param time
              */
             void update(float time);
 
             /**
-             * Setea el path
+             * Setea el path inicial para que el jugador no aparezaca en ena pared.
              */
             void setUp();
 
             /**
-             * Esta funcion calcula todas las partes del nivel en base a la del path
+             * Esta funcion calcula todas las partes del nivel en base a la del path.
              */
             void calculatTopAndBot();
 
             /**
-             * Coloca la pared actual en base a la pared recibida dentro de unos maximos y minimos
+             * Coloca la pared actual en base a la pared recibida dentro de unos maximos y minimos.
+             * Esto nos ayuda a generar el mapa de una manera sencilla.
              * @param wallBehind
              */
             void moveWall(const Wall wallBehind);
 
             /**
-             * Cambia los valores maximos y minimos dentro de unos limites
+             * Cambia los valores maximos y minimos dentro de unos limites. Esto se ejecuta
+             * cada vez que X paredes salen por la izquierda de la pantalla.
              */
             void getHarder();
 

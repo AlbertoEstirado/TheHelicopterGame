@@ -39,13 +39,13 @@ namespace helicopter
             void start();
 
             /**
-             * Comportamientos que necesitan ejecutarse cada frame
+             * Comportamientos que necesitan ejecutarse cada frame. La "gravedad" que afecta al player se ejecuta aqui.
              * @param time
              */
             void update(float time);
 
             /**
-             * Funcion de volar
+             * Funcion de volar. Cuando haga click el jugador, esta funcion sumara en el eje y la gravedad  multiplicada por 2.
              * @param time
              */
             void fly(float time);

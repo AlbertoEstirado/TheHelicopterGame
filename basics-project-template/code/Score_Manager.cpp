@@ -19,8 +19,8 @@ using namespace std;
 
 namespace helicopter
 {
-/*
-    bool Score_Manager::load_score()
+
+    int Score_Manager::load_score()
     {
         string path = application.get_internal_data_path() + "/save.data";
         basics::log.d (string("loading score from:  ") + path);
@@ -35,13 +35,12 @@ namespace helicopter
 
             if (!reader.fail () && !reader.bad ())
             {
-                loadedScore = auxscoreloaed;
-
-                basics::log.e (std::to_string(loadedScore));
+                return auxscoreloaed;
 
             }
             else
             {
+                return 0;
                 basics::log.e ("ERROR at loading score in game_scene failed reading save.data.");
                 basics::log.e ("------------------------------------------------------------------------------------------------");
             }
@@ -64,7 +63,7 @@ namespace helicopter
         {
             basics::log.d ("Score saved succesfully...");
         }
-    }*/
+    }
 }
 
 
