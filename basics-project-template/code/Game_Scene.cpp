@@ -65,19 +65,23 @@ namespace helicopter
         {
             state = RUNNING;
         }
-        if (state == RUNNING || state == PAUSE  || state == GAMEOVER)
-        {
+        if (state == RUNNING || state == PAUSE  || state == GAMEOVER)  //Se necesita reconocer los inputs en estos estados para poder
+        {                                                              //detectar cuando se hace click en las opciones.
             switch (event.id)
             {
                 case ID(touch-started):
                 case ID(touch-moved):
                 {
+                    //Detectamos cuando el jugador esta haciendo click para que pueda volar.
                     touching = true;
                     break;
                 }
                 case ID(touch-ended):
                 {
+                    //Detectamos cuando dejamos de hacer el input
                     touching = false;
+
+                    //Coordenadas de donde soltamos el click
                     x = *event[ID(x)].as< var::Float > ();
                     y = *event[ID(y)].as< var::Float > ();
 
@@ -108,6 +112,9 @@ namespace helicopter
 
     void Game_Scene::update (float time)
     {
+
+        //Aqui ejecutamos aciones en base al estado de la escena
+
         switch (state)
         {
             case LOADING: load ();     break;
@@ -120,7 +127,7 @@ namespace helicopter
 
     void Game_Scene::render (basics::Graphics_Context::Accessor & context)
     {
-        if (!suspended &&  state != LOADING )//(state == RUNNING || state == WAITTING || state == GAMEOVER || state == PAUSE))
+        if (!suspended &&  state != LOADING )//Siempre y cuando no estemos en loading o suspended renderizamos
         {
             Canvas * canvas = context->get_renderer< Canvas > (ID(canvas));
 
@@ -185,27 +192,35 @@ namespace helicopter
             if (context)
             {
 
+                //Cargamos el atlas
                 atlas.reset (new Atlas("atlas/helicopter_atlas.sprites", context));
 
+                //Si el atlas se ha cargado correctamente configuramos la UI
                 if(atlas->good())
                 {
                     configureUI();
                 }
 
+                //Cargamos el sprite del player
                 texturePlayer = Texture_2D::create(ID(texturePlayer),context, "player.png");
                 player.reset(new Player(texturePlayer.get()));
 
+                //Si se ha cargado correctamente la añadimos al contexto
                 if (texturePlayer)
                 {
                     context->add(texturePlayer);
                 }
 
+                //Ejecutamos los start de todos los objetos
                 start();
 
+                //Cargamos la font
                 font.reset (new Raster_Font("fonts/impact.fnt", context));
 
-                //state = atlas->good () ? WAITTING : LOADING;
-                state = WAITTING;
+
+                //En caso de que todo_ haya ido bien pasamos el estado de la escena a waitting
+                state = atlas->good () ? WAITTING : LOADING;
+
             }
         }
     }
@@ -313,6 +328,7 @@ namespace helicopter
 
     void Game_Scene::loadScore()
     {
+
         string path = application.get_internal_data_path() + "/save.data";
         basics::log.d (string("loading score from:  ") + path);
 

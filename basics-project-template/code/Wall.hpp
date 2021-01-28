@@ -24,21 +24,21 @@ namespace helicopter
 
             float speed = 150;    ///< Velocidad a la que se mueven las paredes
 
-            float x = 0;          ///<coordenada en x
+            float x = 0;          ///< Coordenada en x
 
-            struct levelPart{     ///<estructura para definir las partes de una pared
+            struct levelPart{     ///< Estructura para definir las partes de una pared
                 float y;
                 float width;
                 float height;
             };
 
-            int maxHeight = 400;  ///<valores de la generacion de mapa que impidan ser muy facil o imposible
-            int minHeight = 100;  ///<estos valores son los que se cambian para que el juego se vuelva mas dificil
+            int maxHeight = 400;  ///< Valores de la generacion de mapa que impidan ser muy facil o imposible
+            int minHeight = 100;  ///< Estos valores son los que se cambian para que el juego se vuelva mas dificil
 
             //---------------------partes de una pared--------------------
-            levelPart topWall;
-            levelPart botWall;
-            levelPart pathPart;
+            levelPart topWall;    ///< Parte de arriba de la pared
+            levelPart botWall;    ///< Parte de abajo de la pared
+            levelPart pathPart;   ///< Parte por la cual el player va a poder moverse
             //------------------------------------------------------------
 
             Wall();
@@ -59,6 +59,7 @@ namespace helicopter
 
             /**
              * Esta funcion calcula todas las partes del nivel en base a la del path.
+             * Gracias a esto solo tenemos qe definir la parte centrar.
              */
             void calculatTopAndBot();
 

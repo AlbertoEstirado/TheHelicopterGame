@@ -47,7 +47,7 @@ namespace helicopter
         State          state;
         bool           suspended;
 
-        bool touching;
+        bool touching;                                     ///< Determina si el usuario esta tocando la pantalla
 
         unsigned       canvas_width;
         unsigned       canvas_height;

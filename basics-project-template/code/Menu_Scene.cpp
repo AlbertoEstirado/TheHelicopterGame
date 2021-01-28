@@ -41,6 +41,8 @@ namespace helicopter
             option.is_pressed = false;
         }
 
+        //Cargamos el score
+
         load();
         //Score_Manager::load_score();
         //score_string = to_wstring(Score_Manager::loadedScore);
@@ -195,7 +197,7 @@ namespace helicopter
 
                     //font.reset (new Raster_Font("fonts/impact.fnt", context));
 
-
+                    //Printeamos el texto con su fuente correspondiente
                     Text_Layout textLayout(*font, score_string);
                     canvas->draw_text({canvas_width/2.2, canvas_height/3.8f}, textLayout);
                 }
@@ -238,7 +240,7 @@ namespace helicopter
         for (int index = 0; index < number_of_options; ++index)
         {
             const Option & option = options[index];
-
+            //Comprobamos si se ha hecho click dentro del slice
             if
                     (
                     point[0] > option.position[0] - option.slice->width  &&
