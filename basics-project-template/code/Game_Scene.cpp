@@ -61,7 +61,7 @@ namespace helicopter
 
     void Game_Scene::handle (Event & event)
     {
-        if(state == WAITTING)
+        if(state == WAITING)
         {
             state = RUNNING;
         }
@@ -118,7 +118,7 @@ namespace helicopter
         switch (state)
         {
             case LOADING: load ();     break;
-            case WAITTING:   break;
+            case WAITING:   break;
             case PAUSE: break;
             case RUNNING: run  (time); break;
             case GAMEOVER: ; break;
@@ -219,7 +219,7 @@ namespace helicopter
 
 
                 //En caso de que todo_ haya ido bien pasamos el estado de la escena a waitting
-                state = atlas->good () ? WAITTING : LOADING;
+                state = atlas->good () ? WAITING : LOADING;
 
             }
         }

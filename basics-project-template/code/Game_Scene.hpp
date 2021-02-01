@@ -39,7 +39,7 @@ namespace helicopter
         {
             LOADING,
             RUNNING,
-            WAITTING,
+            WAITING,
             GAMEOVER,
             PAUSE
         };
