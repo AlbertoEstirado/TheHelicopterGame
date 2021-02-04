@@ -20,7 +20,7 @@
 namespace helicopter
 {
 
-    static class Score_Manager
+    class Score_Manager
     {
 
     public:
@@ -32,17 +32,19 @@ namespace helicopter
         }
 
 
+
+    private:
+
+
         Score_Manager() = default;
 
         ~Score_Manager() = default;
-
-    private:
 
         Score_Manager(const Score_Manager & ) = delete;
 
     public:
 
-        static int load_score ();
+        int load_score ();
         bool save_score (int newScore);
 
 

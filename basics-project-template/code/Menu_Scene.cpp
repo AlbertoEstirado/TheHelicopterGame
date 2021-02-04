@@ -43,8 +43,8 @@ namespace helicopter
 
         //Cargamos el score
 
-        load();
-        //Score_Manager::load_score();
+        loadedscore = Score_Manager::get_instance().load_score();
+        score_string = to_wstring(loadedscore);
         //score_string = to_wstring(Score_Manager::loadedScore);
 
         return true;

@@ -32,8 +32,9 @@ namespace helicopter
         touching = false;
         walls.resize(130);
 
-        //scoreloaded = helicopter::Score_Manager().load_score();
-        loadScore();
+
+        scoreloaded = Score_Manager::get_instance().load_score();
+        //loadScore();
     }
 
     bool Game_Scene::initialize ()
@@ -272,8 +273,8 @@ namespace helicopter
 
         if(score > scoreloaded)
         {
-            //helicopter::Score_Manager().save_score(score);
-            saveScore();
+            helicopter::Score_Manager::get_instance().save_score(score);
+            //saveScore();
         }
 
         state = GAMEOVER;
@@ -409,7 +410,7 @@ namespace helicopter
             }
 
             //Cada vez que movemos una pared aumentamos la score
-            score+=30;
+            score+=130;
             score_string = to_wstring(score);
 
             //Cada X movimientos hacemos que todas las paredes se vuelven mas dificiles
@@ -449,6 +450,7 @@ namespace helicopter
                 player->get_position_y() > walls[i].topWall.y)
                 {
                     gameover();
+                    break;
                 }
             }
         }
